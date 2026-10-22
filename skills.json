@@ -128,10 +128,10 @@
     }
   },
   "install": {
-    "npm": "npx skills add https://github.com/Orphic-Studios/frappe-skills --skill frappe-docs && npx skills add https://github.com/Orphic-Studios/frappe-skills --skill frappe-course-generator",
+    "skills": "npx skills add Orphic-Studios/frappe-skills",
+    "npm": "npx skills add Orphic-Studios/frappe-skills",
     "git": "git clone https://github.com/Orphic-Studios/frappe-skills.git",
     "bash": "curl -fsSL https://raw.githubusercontent.com/Orphic-Studios/frappe-skills/main/install.sh | bash",
     "powershell": "irm https://raw.githubusercontent.com/Orphic-Studios/frappe-skills/main/install.ps1 | iex"
   }
 }
-

@@ -49,14 +49,14 @@ cp -r frappe-docs ~/.config/hermes/skills/
 cp -r frappe-course-generator ~/.config/hermes/skills/
 ```
 
-### Method 3: Using `npx skills add` (skills.sh)
+### Method 3: Using `npx skills add` (Skills CLI)
 
 ```bash
-# Install frappe-docs first (it's a dependency)
-npx skills add https://github.com/Orphic-Studios/frappe-skills --skill frappe-docs
+# Interactive add (select which skills and agents to install for):
+npx skills add Orphic-Studios/frappe-skills
 
-# Then install frappe-course-generator
-npx skills add https://github.com/Orphic-Studios/frappe-skills --skill frappe-course-generator
+# Or install globally across all detected agents without prompts:
+npx skills add Orphic-Studios/frappe-skills -g --all
 ```
 
 ## Finding Your Agent's Skills Directory

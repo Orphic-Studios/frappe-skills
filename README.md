@@ -51,32 +51,32 @@ A production-ready dual AI skill pack and multi-agent knowledge suite for the [F
 
 ## 🚀 Quick Installation
 
-### Linux / macOS / WSL (One Command)
-```bash
+### Method 1: Skills CLI (Recommended for Hermes, Claude Code, Cursor, Antigravity)
+`ash
+# Add both skills to your active agent:
+npx skills add Orphic-Studios/frappe-skills
+
+# Or install globally across all agents without prompts:
+npx skills add Orphic-Studios/frappe-skills -g --all
+`
+
+### Method 2: Linux / macOS / WSL (One-Command Auto-Installer)
+`ash
 curl -fsSL https://raw.githubusercontent.com/Orphic-Studios/frappe-skills/main/install.sh | bash
-```
-*Auto-detects your installed agents (Hermes, Claude, Antigravity, Cursor, Windsurf, Cline) and installs both skills.*
+`
+*Auto-detects all installed agents (Hermes, Claude, Antigravity, Cursor, Windsurf, Cline) and installs both skills.*
 
-### Windows (PowerShell One Command)
-```powershell
+### Method 3: Windows (PowerShell One-Command)
+`powershell
 irm https://raw.githubusercontent.com/Orphic-Studios/frappe-skills/main/install.ps1 | iex
-```
+`
 
-### Cross-Platform (Python)
-```bash
+### Method 4: Cross-Platform (Python / Manual)
+`ash
 git clone https://github.com/Orphic-Studios/frappe-skills.git
 cd frappe-skills
 python install.py
-```
-
-### Via `skills.sh` / NPM
-```bash
-# Install frappe-docs (dependency)
-npx skills add https://github.com/Orphic-Studios/frappe-skills --skill frappe-docs
-
-# Install frappe-course-generator
-npx skills add https://github.com/Orphic-Studios/frappe-skills --skill frappe-course-generator
-```
+`
 
 ---
 

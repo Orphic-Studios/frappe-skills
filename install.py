@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Frappe Skills Pack — Cross-Platform Installer for AI Agents
+Frappe Skills Pack - Cross-Platform Installer for AI Agents
 Supports: Hermes, Claude Code, Gemini/Antigravity, Cursor, Windsurf, Cline, and generic skills.
 """
 
@@ -30,11 +30,11 @@ def install_skills(dest: Path):
         if target.exists():
             shutil.rmtree(target)
         shutil.copytree(src, target)
-    print(f"✓ Installed skills to: {dest}")
+    print(f"[OK] Installed skills to: {dest}")
 
 def main():
     print("\n====================================================")
-    print("      Frappe Skills Pack — Python Multi-Agent Installer")
+    print("      Frappe Skills Pack - Python Multi-Agent Installer")
     print("====================================================\n")
 
     detected = [(name, path) for name, path, check in AGENTS if check.exists()]
@@ -56,15 +56,17 @@ def main():
         print(f"  {idx}. {name} ({path})")
     all_opt = len(detected) + 1
     custom_opt = len(detected) + 2
-    print(f"  {all_opt}. Install to ALL detected agents")
+    print(f"  {all_opt}. Install to ALL detected agents (default)")
     print(f"  {custom_opt}. Custom directory\n")
 
     try:
         raw = input(f"Select option [1-{custom_opt}]: ").strip()
-        choice = int(raw)
+        if not raw:
+            choice = all_opt
+        else:
+            choice = int(raw)
     except (ValueError, EOFError):
-        print("Aborting.")
-        return
+        choice = all_opt
 
     if 1 <= choice <= len(detected):
         install_skills(detected[choice - 1][1])
@@ -72,12 +74,14 @@ def main():
         for name, path in detected:
             install_skills(path)
     else:
-        custom_path = input("Enter custom path: ").strip()
-        if custom_path:
-            install_skills(Path(custom_path).expanduser())
+        try:
+            custom_path = input("Enter custom path: ").strip()
+            if custom_path:
+                install_skills(Path(custom_path).expanduser())
+        except (EOFError, KeyboardInterrupt):
+            pass
 
-    print("\n🎉 Installation complete! Restart your AI agent to apply.")
+    print("\n[OK] Installation complete! Restart your AI agent to apply.")
 
 if __name__ == "__main__":
     main()
-
