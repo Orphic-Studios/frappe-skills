@@ -154,5 +154,5 @@ Dual-licensed:
 - **MIT License** for open-source, personal, and small-team use.
 - **Commercial License** for enterprise deployments, resale, or proprietary integrations.
 
-See [LICENSE](./LICENSE) for details. Maintainer: [yazan250](https://github.com/yazan250).
+See [LICENSE](./LICENSE) for details. Maintainer: [Orphic-Studios](https://github.com/Orphic-Studios).
 
