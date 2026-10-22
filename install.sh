@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env bash
+#!/usr/bin/env bash
 #
 # Frappe Skills Pack — Universal AI Agent Installer
 #

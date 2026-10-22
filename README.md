@@ -1,4 +1,4 @@
-﻿# Frappe Skills Pack — Multi-Agent AI Knowledge & Course Generator
+# Frappe Skills Pack — Multi-Agent AI Knowledge & Course Generator
 
 [![License: MIT + Commercial](https://img.shields.io/badge/License-MIT%20%2B%20Commercial-blue.svg)](LICENSE)
 [![Frappe v15+](https://img.shields.io/badge/Frappe-v15%2B-green.svg)](https://frappe.io)

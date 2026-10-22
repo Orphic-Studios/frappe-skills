@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     Frappe Skills Pack — Windows PowerShell Installer for AI Agents
 .DESCRIPTION

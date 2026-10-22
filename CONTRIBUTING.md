@@ -1,4 +1,4 @@
-﻿# Contributing to Frappe Skills Pack
+# Contributing to Frappe Skills Pack
 
 First off, thank you for considering contributing! 🎉
 

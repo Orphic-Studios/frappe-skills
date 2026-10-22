@@ -1,4 +1,4 @@
-﻿# Installation Guide
+# Installation Guide
 
 Complete installation instructions for the Frappe Skills Pack.
 

@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "frappe-skills-pack",
   "version": "1.1.0",
   "description": "A production-ready dual AI skill pack and multi-agent integration hub for the Frappe/ERPNext ecosystem: deep technical knowledge base (frappe-docs) and Arabic course generation engine (frappe-course-generator), compatible with Hermes, Claude, Gemini, Antigravity, OpenAI Codex/ChatGPT, Cursor, Windsurf, Copilot, and Cline.",
