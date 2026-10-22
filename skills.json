@@ -3,9 +3,9 @@
   "version": "1.1.0",
   "description": "A production-ready dual AI skill pack and multi-agent integration hub for the Frappe/ERPNext ecosystem: deep technical knowledge base (frappe-docs) and Arabic course generation engine (frappe-course-generator), compatible with Hermes, Claude, Gemini, Antigravity, OpenAI Codex/ChatGPT, Cursor, Windsurf, Copilot, and Cline.",
   "author": {
-    "name": "Yazan",
-    "github": "yazan250",
-    "url": "https://github.com/yazan250"
+    "name": "Orphic Studios",
+    "github": "Orphic-Studios",
+    "url": "https://github.com/Orphic-Studios"
   },
   "repository": {
     "type": "git",
