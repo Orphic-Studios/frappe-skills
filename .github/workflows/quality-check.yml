@@ -1,0 +1,141 @@
+# تحقق من جودة المهارات عند كل push
+name: Skill Quality Check
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    name: Validate Skills
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install pyyaml
+
+      - name: Validate YAML frontmatter
+        run: |
+          python3 << 'EOF'
+          import yaml
+          import sys
+          import os
+
+          skills = ['frappe-docs', 'frappe-course-generator']
+          errors = []
+
+          for skill in skills:
+              path = f'{skill}/SKILL.md'
+              if not os.path.exists(path):
+                  errors.append(f'{path}: file not found')
+                  continue
+
+              with open(path) as f:
+                  content = f.read()
+
+              parts = content.split('---', 2)
+              if len(parts) < 3:
+                  errors.append(f'{path}: no YAML frontmatter found')
+                  continue
+
+              try:
+                  data = yaml.safe_load(parts[1])
+                  if not data.get('name'):
+                      errors.append(f'{path}: missing "name" field')
+                  elif data['name'] != skill:
+                      errors.append(f'{path}: name "{data["name"]}" doesn\'t match folder "{skill}"')
+
+                  if not data.get('description'):
+                      errors.append(f'{path}: missing "description" field')
+                  elif len(data['description']) > 1024:
+                      errors.append(f'{path}: description too long ({len(data["description"])} > 1024 chars)')
+
+                  print(f'✅ {skill}: name={data.get("name")}, description={len(data.get("description", ""))} chars')
+              except yaml.YAMLError as e:
+                  errors.append(f'{path}: YAML error: {e}')
+
+          # Validate skills.json
+          import json
+          if os.path.exists('skills.json'):
+              with open('skills.json') as f:
+                  manifest = json.load(f)
+              print(f'✅ skills.json: {len(manifest.get("skills", []))} skills registered')
+          else:
+              errors.append('skills.json: not found')
+
+          if errors:
+              print('\n❌ Validation failed:')
+              for e in errors:
+                  print(f'  - {e}')
+              sys.exit(1)
+          else:
+              print('\n✅ All validations passed!')
+          EOF
+
+      - name: Check file structure
+        run: |
+          echo "Checking file structure..."
+
+          # Check required top-level files
+          for file in README.md LICENSE CHANGELOG.md CONTRIBUTING.md skills.json; do
+              if [ ! -f "$file" ]; then
+                  echo "❌ Missing: $file"
+                  exit 1
+              fi
+          done
+
+          # Check skill folders
+          for skill in frappe-docs frappe-course-generator; do
+              if [ ! -d "$skill" ]; then
+                  echo "❌ Missing skill folder: $skill"
+                  exit 1
+              fi
+              if [ ! -f "$skill/SKILL.md" ]; then
+                  echo "❌ Missing SKILL.md in: $skill"
+                  exit 1
+              fi
+          done
+
+          echo "✅ File structure OK"
+
+      - name: Test install.sh syntax
+        run: |
+          bash -n install.sh
+          echo "✅ install.sh syntax OK"
+
+      - name: Test Python scripts
+        run: |
+          cd frappe-course-generator/scripts
+          python3 -c "import ast; ast.parse(open('scaffold_course.py').read()); print('✅ scaffold_course.py syntax OK')"
+          python3 -c "import ast; ast.parse(open('build_course.py').read()); print('✅ build_course.py syntax OK')"
+          python3 -c "import ast; ast.parse(open('verify_course.py').read()); print('✅ verify_course.py syntax OK')"
+
+      - name: Test scaffold_course.py
+        run: |
+          cd frappe-course-generator/scripts
+          python3 scaffold_course.py \
+              --name "ci-test" \
+              --track developer \
+              --audience developers \
+              --language ar \
+              --length quick \
+              --with-project \
+              --output /tmp/ci-test-course
+          echo "✅ scaffold_course.py runs successfully"
+
+      - name: Test verify_course.py
+        run: |
+          cd frappe-course-generator/scripts
+          # Run verifier (expected to find issues in scaffold)
+          python3 verify_course.py /tmp/ci-test-course || true
+          echo "✅ verify_course.py runs successfully"

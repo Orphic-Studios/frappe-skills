@@ -1,0 +1,136 @@
+{
+  "name": "frappe-skills-pack",
+  "version": "1.1.0",
+  "description": "A production-ready dual AI skill pack and multi-agent integration hub for the Frappe/ERPNext ecosystem: deep technical knowledge base (frappe-docs) and Arabic course generation engine (frappe-course-generator), compatible with Hermes, Claude, Gemini, Antigravity, OpenAI Codex/ChatGPT, Cursor, Windsurf, Copilot, and Cline.",
+  "author": {
+    "name": "Yazan",
+    "github": "yazan250",
+    "url": "https://github.com/yazan250"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yazan250/frappe-skills"
+  },
+  "homepage": "https://github.com/yazan250/frappe-skills",
+  "license": "MIT + Commercial",
+  "keywords": [
+    "frappe",
+    "erpnext",
+    "frappe-framework",
+    "ai-skills",
+    "ai-agent",
+    "hermes",
+    "claude-code",
+    "gemini",
+    "antigravity",
+    "openai-codex",
+    "chatgpt",
+    "cursor",
+    "cursorrules",
+    "windsurf",
+    "github-copilot",
+    "cline",
+    "roo-code",
+    "training",
+    "course-generator",
+    "arabic",
+    "erp",
+    "open-source"
+  ],
+  "topics": [
+    "frappe",
+    "erpnext",
+    "ai-skills",
+    "ai-agent",
+    "training",
+    "arabic",
+    "course-generator",
+    "multi-agent"
+  ],
+  "skills": [
+    {
+      "name": "frappe-docs",
+      "description": "Comprehensive knowledge of the entire Frappe/ERPNext ecosystem (Frappe Framework, ERPNext, Frappe HR, CRM, Cloud, Builder, Insights, Print Designer, Wiki, Drive, Learning, Helpdesk). Use this skill whenever the user mentions Frappe, ERPNext, bench commands, DocType, frappe.get_doc, frappe.whitelist, frappe.call, frappe.db.sql, ERPNext modules (Accounts/Stock/Selling/Buying/Manufacturing/HR/Projects/Payroll), Web Forms, Server Scripts, Client Scripts, hooks.py, Print Formats, Workflows, Custom Fields, REST API of Frappe/ERPNext, or any task involving installation, customization, troubleshooting, code generation, or configuration of Frappe-based systems.",
+      "path": "frappe-docs",
+      "language": "en",
+      "size_kb": 181,
+      "files_count": 18,
+      "tags": [
+        "frappe",
+        "erpnext",
+        "framework",
+        "reference",
+        "documentation"
+      ],
+      "dependencies": []
+    },
+    {
+      "name": "frappe-course-generator",
+      "description": "Generates complete, production-ready training courses on the Frappe/ERPNext ecosystem in Arabic (with English code/technical terms). Use this skill whenever the user asks to 'create a course', 'build a curriculum', 'generate training material', 'make a tutorial', 'توليد دورة', 'إنشاء كورس تعليمي', 'دورة Frappe', 'دورة ERPNext', 'محتوى تعليمي', 'مواد تدريبية', or wants to teach Frappe/ERPNext to others (developers, end-users, or admins). Also use it when the user wants a 'training kit', 'workshop materials', 'bootcamp', 'onboarding guide', 'learning path', or any structured educational deliverable covering Frappe Framework, ERPNext modules, or any Frappe app.",
+      "path": "frappe-course-generator",
+      "language": "ar",
+      "size_kb": 112,
+      "files_count": 15,
+      "tags": [
+        "frappe",
+        "erpnext",
+        "course-generator",
+        "training",
+        "arabic",
+        "education"
+      ],
+      "dependencies": [
+        "frappe-docs"
+      ]
+    }
+  ],
+  "agents": [
+    "hermes",
+    "claude-code",
+    "claude-projects",
+    "gemini",
+    "antigravity",
+    "codex",
+    "chatgpt",
+    "cursor",
+    "windsurf",
+    "github-copilot",
+    "cline",
+    "roo-code"
+  ],
+  "adapters": {
+    "hermes": "adapters/hermes",
+    "claude": "adapters/claude",
+    "gemini_antigravity": "adapters/gemini-antigravity",
+    "codex_openai": "adapters/codex-openai",
+    "cursor": "adapters/cursor",
+    "windsurf": "adapters/windsurf",
+    "copilot": "adapters/copilot",
+    "cline": "adapters/cline"
+  },
+  "categories": [
+    "Development",
+    "Education",
+    "ERP",
+    "Arabic Content"
+  ],
+  "stats": {
+    "total_skills": 2,
+    "total_files": 33,
+    "total_lines": 22704,
+    "total_size_kb": 293
+  },
+  "marketplace": {
+    "skills_sh": {
+      "listed": true,
+      "url": "https://www.skills.sh/yazan250/frappe-skills",
+      "verified": false
+    }
+  },
+  "install": {
+    "npm": "npx skills add https://github.com/yazan250/frappe-skills --skill frappe-docs && npx skills add https://github.com/yazan250/frappe-skills --skill frappe-course-generator",
+    "git": "git clone https://github.com/yazan250/frappe-skills.git",
+    "bash": "curl -fsSL https://raw.githubusercontent.com/yazan250/frappe-skills/main/install.sh | bash",
+    "powershell": "irm https://raw.githubusercontent.com/yazan250/frappe-skills/main/install.ps1 | iex"
+  }
+}

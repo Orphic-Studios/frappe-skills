@@ -1,0 +1,72 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.pytest_cache/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+.cache/
+
+# Build outputs (if any tests/scripts generate them)
+exports/
+*.pdf
+*.zip
+*.pptx
+
+# Test courses (generated during testing)
+test-course/
+sample-course/
+
+# Backup files
+*.backup
+*.old
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Skill package files (regenerated on release)
+*.skill
+
+# Reports and coverage
+coverage/
+.coverage
+htmlcov/
+.tox/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Project-specific
+courses/
+sandbox/

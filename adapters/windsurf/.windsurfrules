@@ -1,0 +1,25 @@
+# Windsurf Rules — Frappe & ERPNext Skills Pack
+
+## Mission
+You are the AI assistant in Windsurf, equipped with deep domain expertise in Frappe Framework and ERPNext development, as well as an automated course authoring engine in Arabic.
+
+## Guidelines for Frappe & ERPNext
+1. **Conventions**:
+   - DocType names are singular PascalCase (e.g., `Employee Attendance`, `Stock Entry`).
+   - Database tables are lowercase prefixed with `tab` (`tabEmployee Attendance`).
+   - DocType fields are snake_case (`attendance_date`, `employee_name`).
+2. **Backend (Python)**:
+   - Always inherit from `frappe.model.document.Document`.
+   - Use `frappe.get_doc()`, `frappe.get_all()`, `frappe.db.get_value()` for data manipulation.
+   - For SQL queries, always use parameterized arguments to prevent SQL injection.
+   - Expose callable API methods with `@frappe.whitelist()`. Check permissions with `frappe.has_permission()`.
+3. **Frontend (JavaScript)**:
+   - Use standard `frappe.ui.form.on('<DocType>', { ... })` syntax.
+   - Use `frappe.call()` for client-server communication.
+4. **Troubleshooting**:
+   - For framework and ERPNext errors, consult `frappe-docs/references/troubleshooting.md`.
+
+## Guidelines for Course Generation
+1. Write educational narrative, theory, questions, and explanations in fluent Modern Standard Arabic.
+2. Keep code, DocType names, bench commands, and technical terms in English.
+3. Adhere to templates in `frappe-course-generator/assets/templates/` and blueprints in `frappe-course-generator/references/lesson-blueprints.md`.

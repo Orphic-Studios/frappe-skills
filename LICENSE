@@ -1,0 +1,58 @@
+MIT License + Commercial License (Dual License)
+
+Copyright (c) 2026 Yazan (yazan250)
+
+=====================================================================
+PART 1: MIT LICENSE (for personal, educational, and small-team use)
+=====================================================================
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+=====================================================================
+PART 2: COMMERCIAL LICENSE (required for enterprise / resale / SaaS)
+=====================================================================
+
+For any of the following use cases, you MUST obtain a Commercial License
+from the copyright holder:
+
+1. Enterprise use: deployment within an organization with more than 5 users
+2. Resale: bundling these skills into a paid product or service
+3. SaaS integration: offering these skills as part of a hosted service
+4. Training commercialization: selling courses generated using these skills
+   to third parties
+5. White-labeling: removing or modifying copyright notices for redistribution
+
+To obtain a Commercial License, contact: yazan250 (via GitHub)
+
+The Commercial License includes:
+- Royalty-free deployment within the licensed organization
+- Priority support and updates for 12 months
+- Customization services (additional fees may apply)
+- Indemnification against IP claims
+
+=====================================================================
+SUMMARY
+=====================================================================
+
+- Personal / educational / open-source projects: MIT License (free)
+- Small team (≤5 users): MIT License (free)
+- Enterprise (>5 users) or commercial resale: Commercial License (paid)
+
+If you are unsure which license applies to your use case, assume you need
+the Commercial License and contact the maintainer.

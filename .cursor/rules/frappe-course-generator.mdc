@@ -1,0 +1,32 @@
+---
+description: Automated curriculum and lesson authoring engine for Frappe and ERPNext in Arabic
+globs: **/courses/**, **/curriculum/**, **/*course*.md
+alwaysApply: false
+---
+
+# Frappe Course Generator Rules (Arabic)
+
+When authoring, restructuring, or expanding training courses on Frappe Framework or ERPNext:
+
+## 1. Pedagogical Principles
+- **Language**: Modern Standard Arabic for explanation, context, real-world case studies, and quiz questions.
+- **Code & Tech Terms**: English for code blocks, terminal commands (`bench`), DocType names (`Sales Order`), field names (`customer_group`), and file paths.
+- **Tone**: Professional, encouraging, structured, and engineering-focused.
+
+## 2. Lesson Structure
+Every lesson must strictly follow the standard format:
+1. **Title & Metadata**: Module number, lesson title in Arabic with English translation, duration in minutes, and learning objectives.
+2. **Mental Model & Theory**: Visual conceptual explanation (using ASCII/Markdown diagrams where appropriate).
+3. **Hands-On Application**: Concrete step-by-step implementation.
+4. **Interactive Exercise**: Hands-on challenge with hints and full solutions.
+5. **Knowledge Check**: Quiz questions with answer keys and explanations.
+
+## 3. Course Tracks
+- **Developer Track (12 modules)**: Bench CLI, DocType architecture, Python ORM, Controller lifecycle, Client scripting, REST API, Hooks, Portal pages, Testing, and Deployment.
+- **User Track (10 modules)**: ERPNext navigation, Accounts, Stock, Selling, Buying, HR & Payroll, Projects, Manufacturing, Reports, and CRM.
+- **Administrator Track (8 modules)**: Bench architecture, Production deployment, Multi-tenancy, SSL/Nginx, Backups/Restoration, MariaDB tuning, Workers, and Troubleshooting.
+
+## 4. Automation Scripts
+- Scaffold: `python frappe-course-generator/scripts/scaffold_course.py --name <course-name> --track <developer|user|admin>`
+- Build: `python frappe-course-generator/scripts/build_course.py --source <course-folder> --format all`
+- Verify: `python frappe-course-generator/scripts/verify_course.py --source <course-folder>`

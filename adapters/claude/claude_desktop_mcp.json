@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "frappe-skills": {
+      "command": "python",
+      "args": [
+        "-m",
+        "http.server",
+        "8899"
+      ],
+      "env": {
+        "SKILLS_PATH": "./frappe-docs"
+      }
+    }
+  }
+}

@@ -1,0 +1,67 @@
+# إنشاء release تلقائي عند دفع tag
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install pyyaml
+
+      - name: Validate skills before release
+        run: |
+          python3 << 'EOF'
+          import yaml
+          import sys
+
+          skills = ['frappe-docs', 'frappe-course-generator']
+          for skill in skills:
+              with open(f'{skill}/SKILL.md') as f:
+                  content = f.read()
+              parts = content.split('---', 2)
+              data = yaml.safe_load(parts[1])
+              assert data['name'] == skill, f"{skill}: name mismatch"
+              assert len(data['description']) <= 1024, f"{skill}: description too long"
+              print(f'✅ {skill} valid')
+
+          print('All skills valid for release!')
+          EOF
+
+      - name: Create .skill packages
+        run: |
+          # Create .skill files (ZIP archives) for each skill
+          zip -r frappe-docs.skill frappe-docs/
+          zip -r frappe-course-generator.skill frappe-course-generator/
+
+          # Create a combined pack
+          zip -r frappe-skills-pack.zip frappe-docs/ frappe-course-generator/ README.md LICENSE install.sh skills.json
+
+          ls -la *.skill *.zip
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            frappe-docs.skill
+            frappe-course-generator.skill
+            frappe-skills-pack.zip
+          generate_release_notes: true
+          draft: false
+          prerelease: ${{ contains(github.ref, '-rc') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
