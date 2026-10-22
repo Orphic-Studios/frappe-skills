@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "frappe-skills-pack",
   "version": "1.1.0",
   "description": "A production-ready dual AI skill pack and multi-agent integration hub for the Frappe/ERPNext ecosystem: deep technical knowledge base (frappe-docs) and Arabic course generation engine (frappe-course-generator), compatible with Hermes, Claude, Gemini, Antigravity, OpenAI Codex/ChatGPT, Cursor, Windsurf, Copilot, and Cline.",
@@ -9,9 +9,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yazan250/frappe-skills"
+    "url": "https://github.com/Orphic-Studios/frappe-skills"
   },
-  "homepage": "https://github.com/yazan250/frappe-skills",
+  "homepage": "https://github.com/Orphic-Studios/frappe-skills",
   "license": "MIT + Commercial",
   "keywords": [
     "frappe",
@@ -123,14 +123,15 @@
   "marketplace": {
     "skills_sh": {
       "listed": true,
-      "url": "https://www.skills.sh/yazan250/frappe-skills",
+      "url": "https://www.skills.sh/Orphic-Studios/frappe-skills",
       "verified": false
     }
   },
   "install": {
-    "npm": "npx skills add https://github.com/yazan250/frappe-skills --skill frappe-docs && npx skills add https://github.com/yazan250/frappe-skills --skill frappe-course-generator",
-    "git": "git clone https://github.com/yazan250/frappe-skills.git",
-    "bash": "curl -fsSL https://raw.githubusercontent.com/yazan250/frappe-skills/main/install.sh | bash",
-    "powershell": "irm https://raw.githubusercontent.com/yazan250/frappe-skills/main/install.ps1 | iex"
+    "npm": "npx skills add https://github.com/Orphic-Studios/frappe-skills --skill frappe-docs && npx skills add https://github.com/Orphic-Studios/frappe-skills --skill frappe-course-generator",
+    "git": "git clone https://github.com/Orphic-Studios/frappe-skills.git",
+    "bash": "curl -fsSL https://raw.githubusercontent.com/Orphic-Studios/frappe-skills/main/install.sh | bash",
+    "powershell": "irm https://raw.githubusercontent.com/Orphic-Studios/frappe-skills/main/install.ps1 | iex"
   }
 }
+

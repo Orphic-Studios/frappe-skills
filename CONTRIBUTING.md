@@ -1,4 +1,4 @@
-# Contributing to Frappe Skills Pack
+﻿# Contributing to Frappe Skills Pack
 
 First off, thank you for considering contributing! 🎉
 
@@ -34,7 +34,7 @@ By participating, you agree to abide by our [Code of Conduct](./CODE_OF_CONDUCT.
 # Fork the repo on GitHub, then:
 git clone https://github.com/YOUR_USERNAME/frappe-skills.git
 cd frappe-skills
-git remote add upstream https://github.com/yazan250/frappe-skills.git
+git remote add upstream https://github.com/Orphic-Studios/frappe-skills.git
 ```
 
 ### 2. Create a branch
@@ -176,3 +176,4 @@ Releases follow semantic versioning:
 - Or contact the maintainer via GitHub.
 
 Thank you for contributing! 🙏
+

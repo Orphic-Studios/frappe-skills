@@ -1,12 +1,12 @@
-#!/usr/bin/env bash
+﻿#!/usr/bin/env bash
 #
 # Frappe Skills Pack — Universal AI Agent Installer
 #
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/yazan250/frappe-skills/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/Orphic-Studios/frappe-skills/main/install.sh | bash
 #
 # Or:
-#   git clone https://github.com/yazan250/frappe-skills.git && cd frappe-skills && ./install.sh
+#   git clone https://github.com/Orphic-Studios/frappe-skills.git && cd frappe-skills && ./install.sh
 #
 
 set -e
@@ -24,7 +24,7 @@ success() { echo -e "${GREEN}✓${NC}  $1"; }
 warning() { echo -e "${YELLOW}⚠${NC}  $1"; }
 error() { echo -e "${RED}✗${NC}  $1"; }
 
-REPO_URL="https://github.com/yazan250/frappe-skills.git"
+REPO_URL="https://github.com/Orphic-Studios/frappe-skills.git"
 TEMP_DIR="/tmp/frappe-skills-install-$$"
 
 detect_agents() {
@@ -160,3 +160,4 @@ main() {
 }
 
 main "$@"
+

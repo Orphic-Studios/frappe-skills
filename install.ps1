@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Frappe Skills Pack — Windows PowerShell Installer for AI Agents
 .DESCRIPTION
@@ -110,3 +110,4 @@ Write-Host ""
 Write-Success "🎉 Installation completed!"
 Write-Host "Restart your AI agent to begin using frappe-docs and frappe-course-generator."
 Write-Host ""
+

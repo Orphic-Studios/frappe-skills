@@ -1,4 +1,4 @@
-# Frappe Skills Pack — Multi-Agent AI Knowledge & Course Generator
+﻿# Frappe Skills Pack — Multi-Agent AI Knowledge & Course Generator
 
 [![License: MIT + Commercial](https://img.shields.io/badge/License-MIT%20%2B%20Commercial-blue.svg)](LICENSE)
 [![Frappe v15+](https://img.shields.io/badge/Frappe-v15%2B-green.svg)](https://frappe.io)
@@ -53,18 +53,18 @@ A production-ready dual AI skill pack and multi-agent knowledge suite for the [F
 
 ### Linux / macOS / WSL (One Command)
 ```bash
-curl -fsSL https://raw.githubusercontent.com/yazan250/frappe-skills/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Orphic-Studios/frappe-skills/main/install.sh | bash
 ```
 *Auto-detects your installed agents (Hermes, Claude, Antigravity, Cursor, Windsurf, Cline) and installs both skills.*
 
 ### Windows (PowerShell One Command)
 ```powershell
-irm https://raw.githubusercontent.com/yazan250/frappe-skills/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/Orphic-Studios/frappe-skills/main/install.ps1 | iex
 ```
 
 ### Cross-Platform (Python)
 ```bash
-git clone https://github.com/yazan250/frappe-skills.git
+git clone https://github.com/Orphic-Studios/frappe-skills.git
 cd frappe-skills
 python install.py
 ```
@@ -72,10 +72,10 @@ python install.py
 ### Via `skills.sh` / NPM
 ```bash
 # Install frappe-docs (dependency)
-npx skills add https://github.com/yazan250/frappe-skills --skill frappe-docs
+npx skills add https://github.com/Orphic-Studios/frappe-skills --skill frappe-docs
 
 # Install frappe-course-generator
-npx skills add https://github.com/yazan250/frappe-skills --skill frappe-course-generator
+npx skills add https://github.com/Orphic-Studios/frappe-skills --skill frappe-course-generator
 ```
 
 ---
@@ -155,3 +155,4 @@ Dual-licensed:
 - **Commercial License** for enterprise deployments, resale, or proprietary integrations.
 
 See [LICENSE](./LICENSE) for details. Maintainer: [yazan250](https://github.com/yazan250).
+

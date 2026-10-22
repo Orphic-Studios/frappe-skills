@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
 Frappe Skills Pack — Cross-Platform Installer for AI Agents
 Supports: Hermes, Claude Code, Gemini/Antigravity, Cursor, Windsurf, Cline, and generic skills.
@@ -80,3 +80,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

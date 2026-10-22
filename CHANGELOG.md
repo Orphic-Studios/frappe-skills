@@ -1,4 +1,4 @@
-# Changelog
+﻿# Changelog
 
 All notable changes to this project will be documented in this file.
 
@@ -99,8 +99,9 @@ If you installed an earlier version (before the public release):
 
 2. Install the new version:
    ```bash
-   npx skills add https://github.com/yazan250/frappe-skills --skill frappe-docs
-   npx skills add https://github.com/yazan250/frappe-skills --skill frappe-course-generator
+   npx skills add https://github.com/Orphic-Studios/frappe-skills --skill frappe-docs
+   npx skills add https://github.com/Orphic-Studios/frappe-skills --skill frappe-course-generator
    ```
 
 3. Restart your AI agent.
+

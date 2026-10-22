@@ -1,4 +1,4 @@
-# Installation Guide
+﻿# Installation Guide
 
 Complete installation instructions for the Frappe Skills Pack.
 
@@ -22,12 +22,12 @@ pip install reportlab markdown arabic-reshaper python-bidi python-pptx
 
 **On Linux / macOS / WSL:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/yazan250/frappe-skills/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Orphic-Studios/frappe-skills/main/install.sh | bash
 ```
 
 **On Windows (PowerShell):**
 ```powershell
-irm https://raw.githubusercontent.com/yazan250/frappe-skills/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/Orphic-Studios/frappe-skills/main/install.ps1 | iex
 ```
 
 The installer will:
@@ -40,7 +40,7 @@ The installer will:
 
 ```bash
 # Clone the repo
-git clone https://github.com/yazan250/frappe-skills.git
+git clone https://github.com/Orphic-Studios/frappe-skills.git
 cd frappe-skills
 
 # Copy both skill folders to your agent's skills directory
@@ -53,10 +53,10 @@ cp -r frappe-course-generator ~/.config/hermes/skills/
 
 ```bash
 # Install frappe-docs first (it's a dependency)
-npx skills add https://github.com/yazan250/frappe-skills --skill frappe-docs
+npx skills add https://github.com/Orphic-Studios/frappe-skills --skill frappe-docs
 
 # Then install frappe-course-generator
-npx skills add https://github.com/yazan250/frappe-skills --skill frappe-course-generator
+npx skills add https://github.com/Orphic-Studios/frappe-skills --skill frappe-course-generator
 ```
 
 ## Finding Your Agent's Skills Directory
@@ -114,7 +114,7 @@ rm -rf ~/.config/hermes/skills/frappe-docs
 rm -rf ~/.config/hermes/skills/frappe-course-generator
 
 # Re-run installer
-curl -fsSL https://raw.githubusercontent.com/yazan250/frappe-skills/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Orphic-Studios/frappe-skills/main/install.sh | bash
 ```
 
 Or with `npx skills`:
@@ -160,3 +160,4 @@ python3 ~/.config/hermes/skills/frappe-course-generator/scripts/scaffold_course.
 chmod +x install.sh
 ./install.sh
 ```
+
