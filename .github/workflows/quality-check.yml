@@ -40,7 +40,7 @@ jobs:
                   errors.append(f'{path}: file not found')
                   continue
 
-              with open(path) as f:
+              with open(path, encoding='utf-8-sig') as f:
                   content = f.read()
 
               parts = content.split('---', 2)
@@ -67,7 +67,7 @@ jobs:
           # Validate skills.json
           import json
           if os.path.exists('skills.json'):
-              with open('skills.json') as f:
+              with open('skills.json', encoding='utf-8-sig') as f:
                   manifest = json.load(f)
               print(f'✅ skills.json: {len(manifest.get("skills", []))} skills registered')
           else:
