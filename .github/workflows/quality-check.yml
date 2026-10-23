@@ -154,7 +154,7 @@ jobs:
               --with-project \
               --output /tmp/ci-test-course
           test -f /tmp/ci-test-course/README.md
-          test -d /tmp/ci-test-course/modules
+          test -f /tmp/ci-test-course/MANIFEST.json
           echo "Course generator scripts run and scaffold successfully"
 
   validate-platforms:
