@@ -2,7 +2,7 @@
 
 First off, thank you for considering contributing! 🎉
 
-This project aims to be the best AI skill pack for the Frappe/ERPNext ecosystem, and contributions from the community are what make that possible.
+This project aims to be the best AI skill pack and plugin for the Frappe/ERPNext ecosystem, and contributions from the community are what make that possible.
 
 ## Ways to Contribute
 
@@ -10,7 +10,7 @@ This project aims to be the best AI skill pack for the Frappe/ERPNext ecosystem,
 - 💡 **Suggest features** — open an issue with the `enhancement` label
 - 📝 **Improve documentation** — fix typos, add examples, clarify explanations
 - 🌍 **Translate** — help translate course templates to other languages
-- 🧪 **Add test cases** — help expand the eval set
+- 🧪 **Add test cases** — help expand validation scripts and checklists
 - 🔧 **Fix bugs** — submit a pull request
 
 ## Before You Start
@@ -22,9 +22,10 @@ By participating, you agree to abide by our [Code of Conduct](./CODE_OF_CONDUCT.
 ### Prerequisites
 
 - Git
-- Python 3.11+ (for running scripts)
+- Node.js 20+ (for running repository validation scripts)
+- Python 3.11+ (for running `frappe-course-generator` scripts)
 - A Markdown editor (VS Code recommended)
-- An AI agent to test with (Hermes, Claude Code, etc.)
+- An AI agent to test with (Claude Code, Antigravity, Gemini CLI, Codex, Cursor, Hermes, etc.)
 
 ## Development Workflow
 
@@ -47,16 +48,18 @@ git checkout -b feature/my-new-feature
 
 ### 3. Make your changes
 
-Follow the guidelines below for the type of change you're making.
+Follow the guidelines below for the type of change you're making. Also review [`.claude/rules/skills-contributing.md`](./.claude/rules/skills-contributing.md).
 
-### 4. Test your changes
+### 4. Test and validate your changes
 
 ```bash
-# For frappe-docs changes:
-# Test by asking your AI agent questions about the topic you edited
+# Run repository validation checks:
+node scripts/validate-skills.js
+node scripts/validate-versions.js
+node scripts/validate-commands.js
 
-# For frappe-course-generator changes:
-cd frappe-course-generator/scripts
+# For frappe-course-generator script changes:
+cd skills/frappe-course-generator/scripts
 python3 scaffold_course.py --name test --track developer --audience developers --language ar --length quick --with-project --output /tmp/test-course
 python3 verify_course.py /tmp/test-course
 ```
@@ -79,13 +82,13 @@ Use [Conventional Commits](https://www.conventionalcommits.org/) format:
 
 ### 6. Open a pull request
 
-Go to GitHub and open a PR against `main`. Fill in the PR template.
+Go to GitHub and open a PR against `main`.
 
 ## Contribution Guidelines by Type
 
 ### Fixing a Bug in `frappe-docs`
 
-1. Identify the file with the error (use the decision tree in `frappe-docs/SKILL.md` to find it).
+1. Identify the file with the error (use the decision tree in `skills/frappe-docs/SKILL.md` to find it).
 2. Verify the error against the official Frappe docs at https://docs.frappe.io.
 3. Fix the error.
 4. Test by asking your AI agent about the topic.
@@ -94,7 +97,7 @@ Go to GitHub and open a PR against `main`. Fill in the PR template.
 ### Adding a New Reference File to `frappe-docs`
 
 1. Check that the topic isn't already covered (search existing files).
-2. Create the new file under the appropriate subdirectory:
+2. Create the new file under the appropriate subdirectory inside `skills/frappe-docs/`:
    - `references/framework/` for Framework topics
    - `references/erpnext/` for ERPNext topics
    - `references/apps/` for other Frappe apps
@@ -103,77 +106,40 @@ Go to GitHub and open a PR against `main`. Fill in the PR template.
    - Use H2 for major sections, H3 for subsections
    - Include code examples with language tags
    - Include "Where to Learn More" with live docs URLs
-4. Update `frappe-docs/SKILL.md` to mention the new file in the Reference Files table.
-5. Update `references/docs-index.md` if applicable.
+4. Update `skills/frappe-docs/SKILL.md` to mention the new file in the Reference Files table.
+5. Update `skills/frappe-docs/references/docs-index.md` if applicable.
 6. Submit a PR with `feat:` prefix.
 
 ### Improving `frappe-course-generator`
 
-1. **Curriculum changes**: edit `references/curriculum.md`.
-2. **Lesson template changes**: edit `references/lesson-blueprints.md`.
-3. **Script changes**: edit the relevant script in `scripts/`.
-4. **New template**: add to `assets/templates/` and update SKILL.md.
+1. **Curriculum changes**: edit `skills/frappe-course-generator/references/curriculum.md`.
+2. **Lesson template changes**: edit `skills/frappe-course-generator/references/lesson-blueprints.md`.
+3. **Script changes**: edit the relevant script in `skills/frappe-course-generator/scripts/`.
+4. **New template**: add to `skills/frappe-course-generator/assets/templates/` and update `skills/frappe-course-generator/SKILL.md`.
 5. Test by generating a sample course.
 6. Submit a PR.
 
-### Translating Course Output
-
-The course generator currently outputs in Arabic. To add a new language:
-
-1. Create `references/lesson-blueprints.<lang>.md` (translate the templates).
-2. Update `scripts/scaffold_course.py` to accept the new `--language` value.
-3. Update `SKILL.md` to mention the new language.
-4. Test by generating a course in the new language.
-5. Submit a PR.
-
 ## Style Guide
 
-### Markdown
+### Markdown & Encoding
 
+- Save all files as **UTF-8 without BOM** with `LF` line endings.
 - Use H1 (`#`) only once per file, at the top.
-- Use H2 (`##`) for major sections.
-- Use H3 (`###`) for subsections.
+- Use H2 (`##`) for major sections and H3 (`###`) for subsections.
 - Code blocks must have language tags: ` ```python `, ` ```bash `, ` ```json `.
-- Tables for structured data.
-- No emojis in reference files (use in README/CHANGELOG is OK).
-
-### Code
-
-- Python: PEP 8, max line length 100.
-- JavaScript: 2-space indentation, semicolons required.
-- Bash: 4-space indentation, `set -e` at the top of scripts.
 
 ### Language
 
 - `frappe-docs`: English only.
 - `frappe-course-generator`: Arabic prose, English code and technical terms.
 - First occurrence of technical terms: bilingual (`DocType (نوع المستند)`).
-- Subsequent occurrences: English only.
-
-## Review Process
-
-Pull requests are reviewed by the maintainer. The review checks for:
-
-1. **Technical accuracy** — does the change match the official Frappe docs?
-2. **Style consistency** — does it follow the style guide above?
-3. **Completeness** — does it include tests, docs, and changelog updates?
-4. **Compatibility** — does it break existing functionality?
-
-Reviews aim to be completed within 7 days. If you haven't heard back, please ping the PR.
 
 ## Release Process
 
 Releases follow semantic versioning:
 
-1. The maintainer bumps the version in `CHANGELOG.md`.
-2. A new git tag is created (`v1.0.1`, `v1.1.0`, etc.).
-3. The release is published on GitHub Releases.
-4. The skills.sh marketplace manifest (`skills.json`) is updated.
-
-## Questions?
-
-- Open an issue with the `question` label.
-- Or contact the maintainer via GitHub.
+1. Bump the version across all 6 plugin manifests (`plugin.json`, `skills.json`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `.codex-plugin/plugin.json`, `.agents/plugins/marketplace.json`) and verify with `node scripts/validate-versions.js`.
+2. Update `CHANGELOG.md`.
+3. Create and push a git tag (`v1.1.0`, etc.) to trigger the automated GitHub Release workflow.
 
 Thank you for contributing! 🙏
-

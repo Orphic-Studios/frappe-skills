@@ -4,9 +4,8 @@
 #
 # Usage:
 #   curl -fsSL https://raw.githubusercontent.com/Orphic-Studios/frappe-skills/main/install.sh | bash
-#
-# Or:
-#   git clone https://github.com/Orphic-Studios/frappe-skills.git && cd frappe-skills && ./install.sh
+#   ./install.sh --all
+#   ./install.sh --agent hermes
 #
 
 set -e
@@ -28,6 +27,26 @@ REPO_URL="https://github.com/Orphic-Studios/frappe-skills.git"
 ZIP_URL="https://github.com/Orphic-Studios/frappe-skills/archive/refs/heads/main.zip"
 TEMP_DIR="/tmp/frappe-skills-install-$$"
 
+resolve_agent_path() {
+    case "$1" in
+        hermes) echo "$HOME/.config/hermes/skills" ;;
+        claude|claude-code) echo "$HOME/.claude/skills" ;;
+        antigravity|agy) echo "$HOME/.gemini/antigravity/skills" ;;
+        gemini|gemini-cli) echo "$HOME/.gemini/skills" ;;
+        codex) echo "$HOME/.codex/skills" ;;
+        cursor) echo "$HOME/.cursor/skills" ;;
+        windsurf) echo "$HOME/.codeium/windsurf/skills" ;;
+        opencode) echo "$HOME/.config/opencode/skills" ;;
+        copilot|copilot-cli) echo "$HOME/.copilot/skills" ;;
+        commandcode) echo "$HOME/.commandcode/skills" ;;
+        cline) echo "$HOME/.cline/skills" ;;
+        roo|roo-code) echo "$HOME/.roo/skills" ;;
+        kiro) echo "$HOME/.kiro/skills" ;;
+        generic|skills) echo "$HOME/.skills" ;;
+        *) echo "" ;;
+    esac
+}
+
 detect_agents() {
     # Hermes
     if [ -d "$HOME/.config/hermes" ] || command -v hermes >/dev/null 2>&1; then
@@ -39,9 +58,19 @@ detect_agents() {
         echo "Claude Code:$HOME/.claude/skills"
     fi
 
-    # Google Antigravity & Gemini
-    if [ -d "$HOME/.gemini" ] || [ -d "$HOME/.antigravity" ]; then
-        echo "Antigravity & Gemini:$HOME/.gemini/antigravity/skills"
+    # Google Antigravity
+    if [ -d "$HOME/.gemini/antigravity" ] || [ -d "$HOME/.antigravity" ] || command -v agy >/dev/null 2>&1; then
+        echo "Google Antigravity:$HOME/.gemini/antigravity/skills"
+    fi
+
+    # Gemini CLI
+    if [ -d "$HOME/.gemini" ] || command -v gemini >/dev/null 2>&1; then
+        echo "Gemini CLI:$HOME/.gemini/skills"
+    fi
+
+    # OpenAI Codex CLI
+    if [ -d "$HOME/.codex" ] || command -v codex >/dev/null 2>&1; then
+        echo "OpenAI Codex:$HOME/.codex/skills"
     fi
 
     # Cursor
@@ -50,7 +79,9 @@ detect_agents() {
     fi
 
     # Windsurf
-    if [ -d "$HOME/.windsurf" ]; then
+    if [ -d "$HOME/.codeium/windsurf" ]; then
+        echo "Windsurf:$HOME/.codeium/windsurf/skills"
+    elif [ -d "$HOME/.windsurf" ]; then
         echo "Windsurf:$HOME/.windsurf/skills"
     fi
 
@@ -59,9 +90,29 @@ detect_agents() {
         echo "OpenCode:$HOME/.config/opencode/skills"
     fi
 
+    # GitHub Copilot CLI
+    if [ -d "$HOME/.copilot" ]; then
+        echo "GitHub Copilot CLI:$HOME/.copilot/skills"
+    fi
+
+    # Command Code
+    if [ -d "$HOME/.commandcode" ]; then
+        echo "Command Code:$HOME/.commandcode/skills"
+    fi
+
     # Cline
     if [ -d "$HOME/.cline" ]; then
         echo "Cline:$HOME/.cline/skills"
+    fi
+
+    # Roo Code
+    if [ -d "$HOME/.roo" ]; then
+        echo "Roo Code:$HOME/.roo/skills"
+    fi
+
+    # Kiro
+    if [ -d "$HOME/.kiro" ]; then
+        echo "Kiro:$HOME/.kiro/skills"
     fi
 
     # Generic ~/.skills/
@@ -74,11 +125,9 @@ install_to_dir() {
     local target_dir="$1"
     mkdir -p "$target_dir"
 
-    # Install frappe-docs
     rm -rf "$target_dir/frappe-docs"
     cp -r "$SOURCE_DIR/skills/frappe-docs" "$target_dir/"
 
-    # Install frappe-course-generator
     rm -rf "$target_dir/frappe-course-generator"
     cp -r "$SOURCE_DIR/skills/frappe-course-generator" "$target_dir/"
 
@@ -93,6 +142,30 @@ cleanup() {
 trap cleanup EXIT
 
 main() {
+    local install_all=0
+    local requested_agent=""
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --all|-a)
+                install_all=1
+                shift
+                ;;
+            --agent)
+                requested_agent="$2"
+                shift 2
+                ;;
+            *)
+                shift
+                ;;
+        esac
+    done
+
+    if [ "$requested_agent" = "all" ]; then
+        install_all=1
+        requested_agent=""
+    fi
+
     echo ""
     echo -e "${CYAN}====================================================${NC}"
     echo -e "${CYAN}       Frappe Skills Pack - Multi-Agent Installer   ${NC}"
@@ -123,6 +196,18 @@ main() {
         success "Skills package downloaded."
     fi
 
+    if [ -n "$requested_agent" ]; then
+        target_path="$(resolve_agent_path "$requested_agent")"
+        if [ -z "$target_path" ]; then
+            error "Unknown agent: $requested_agent"
+            exit 1
+        fi
+        install_to_dir "$target_path"
+        echo ""
+        echo -e "${GREEN}[OK] Installation complete!${NC}"
+        exit 0
+    fi
+
     # Read detected agents portably (compatible with Bash 3.2 on macOS and Bash 4/5)
     DETECTED=()
     while IFS= read -r line; do
@@ -136,7 +221,7 @@ EOF
     if [ ${#DETECTED[@]} -eq 0 ]; then
         warning "No known AI agent directories detected. Using ~/.skills/"
         install_to_dir "$HOME/.skills"
-    elif [ "$1" = "--all" ] || [ ! -t 0 ]; then
+    elif [ "$install_all" -eq 1 ] || [ ! -t 0 ]; then
         info "Installing to all detected agent environments..."
         for entry in "${DETECTED[@]}"; do
             target="${entry#*:}"
@@ -153,7 +238,6 @@ EOF
         echo -e "  $(( ${#DETECTED[@]} + 2 )). Custom directory"
         echo ""
 
-        # Try reading from /dev/tty if available
         choice=""
         if [ -e /dev/tty ]; then
             read -r -p "Select option [1-$(( ${#DETECTED[@]} + 2 ))] (Press Enter for ALL): " choice < /dev/tty

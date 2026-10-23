@@ -38,7 +38,7 @@ npx skills add Orphic-Studios/frappe-skills -g --all
 **OpenAI Codex CLI Plugin Marketplace:**
 ```bash
 codex plugin marketplace add Orphic-Studios/frappe-skills
-codex plugin install frappe-skills@orphic-frappe-skills
+codex plugin add frappe-skills@frappe-skills
 ```
 
 **Google Antigravity (`agy`):**

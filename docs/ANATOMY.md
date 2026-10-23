@@ -4,10 +4,10 @@ How the Frappe Skills Pack is structured and why.
 
 ## The Standard Skill Format
 
-Every skill is a folder containing:
+Every skill is a folder under `skills/` containing:
 
 ```
-skill-name/
+skills/skill-name/
 ├── SKILL.md          ← required, the entry point
 └── (any other files) ← optional, loaded on demand
 ```
@@ -35,62 +35,72 @@ The agent reads only the frontmatter initially. When the user asks a question th
 ```
 frappe-skills/
 ├── README.md
+├── CLAUDE.md
+├── AGENTS.md
+├── GEMINI.md
 ├── LICENSE
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── CODE_OF_CONDUCT.md
-├── skills.json                       ← marketplace manifest
-├── install.sh                        ← installer script
-├── .gitignore
-├── docs/
-│   ├── INSTALL.md
-│   ├── USAGE.md
-│   └── ANATOMY.md                    ← this file
+├── plugin.json                       ← root plugin manifest
+├── skills.json                       ← skills.sh marketplace manifest
+├── .claude-plugin/                   ← Claude Code & Cursor plugin manifests
+├── .codex-plugin/                    ← OpenAI Codex CLI plugin manifest
+├── .agents/plugins/                  ← Codex marketplace manifest
+├── .claude/commands/                 ← Claude Code slash commands (.md)
+├── .gemini/commands/                 ← Gemini CLI slash commands (.toml)
+├── commands/                         ← Antigravity CLI slash commands (.toml)
+├── agents/                           ← Specialist personas (architect, reviewer, instructor)
+├── references/                       ← Quick-reference checklists
+├── scripts/                          ← Validation scripts (Node.js)
+├── docs/                             ← Setup guides per agent host
+├── install.sh / install.ps1 / install.py
 │
-├── frappe-docs/                      ← SKILL 1
-│   ├── SKILL.md                      ← entry point + decision tree
-│   └── references/                   ← loaded on demand
-│       ├── docs-index.md
-│       ├── troubleshooting.md
-│       ├── framework/
-│       │   ├── architecture.md
-│       │   ├── python-api.md
-│       │   ├── rest-api.md
-│       │   ├── doctype-guide.md
-│       │   ├── scripting.md
-│       │   ├── bench-cli.md
-│       │   └── webviews-deployment.md
-│       ├── erpnext/
-│       │   ├── overview.md
-│       │   ├── accounts.md
-│       │   ├── stock.md
-│       │   ├── selling-buying.md
-│       │   ├── manufacturing.md
-│       │   ├── hr-projects.md
-│       │   └── customization.md
-│       └── apps/
-│           └── ecosystem.md
-│
-└── frappe-course-generator/          ← SKILL 2
-    ├── SKILL.md                      ← 9-step generation workflow
-    ├── references/                   ← loaded on demand
-    │   ├── curriculum.md
-    │   ├── lesson-blueprints.md
-    │   ├── delivery-formats.md
-    │   └── assessment-rubrics.md
-    ├── assets/
-    │   ├── templates/                ← blank templates
-    │   │   ├── lesson.template.md
-    │   │   ├── exercise.template.md
-    │   │   ├── quiz.template.md
-    │   │   ├── module-readme.template.md
-    │   │   └── course-readme.template.md
-    │   └── project-scaffold/
-    │       └── README.md             ← progressive project brief
-    └── scripts/                      ← executable helpers
-        ├── scaffold_course.py
-        ├── build_course.py
-        └── verify_course.py
+└── skills/
+    ├── frappe-docs/                  ← SKILL 1
+    │   ├── SKILL.md                  ← entry point + decision tree
+    │   └── references/               ← loaded on demand
+    │       ├── docs-index.md
+    │       ├── troubleshooting.md
+    │       ├── framework/
+    │       │   ├── architecture.md
+    │       │   ├── python-api.md
+    │       │   ├── rest-api.md
+    │       │   ├── doctype-guide.md
+    │       │   ├── scripting.md
+    │       │   ├── bench-cli.md
+    │       │   └── webviews-deployment.md
+    │       ├── erpnext/
+    │       │   ├── overview.md
+    │       │   ├── accounts.md
+    │       │   ├── stock.md
+    │       │   ├── selling-buying.md
+    │       │   ├── manufacturing.md
+    │       │   ├── hr-projects.md
+    │       │   └── customization.md
+    │       └── apps/
+    │           └── ecosystem.md
+    │
+    └── frappe-course-generator/      ← SKILL 2
+        ├── SKILL.md                  ← 9-step generation workflow
+        ├── references/               ← loaded on demand
+        │   ├── curriculum.md
+        │   ├── lesson-blueprints.md
+        │   ├── delivery-formats.md
+        │   └── assessment-rubrics.md
+        ├── assets/
+        │   ├── templates/            ← blank templates
+        │   │   ├── lesson.template.md
+        │   │   ├── exercise.template.md
+        │   │   ├── quiz.template.md
+        │   │   ├── module-readme.template.md
+        │   │   └── course-readme.template.md
+        │   └── project-scaffold/
+        │       └── README.md         ← progressive project brief
+        └── scripts/                  ← executable helpers
+            ├── scaffold_course.py
+            ├── build_course.py
+            └── verify_course.py
 ```
 
 ## How the Two Skills Work Together
@@ -153,71 +163,9 @@ User asks: "Create a Frappe course for developers"
 - **Fast**: creating 100 folders is instant in Python, slow if the agent does it
 - **Testable**: you can run scripts in CI/CD without an AI agent
 
-### Why templates?
-
-- **Consistency**: every generated lesson follows the same structure
-- **Speed**: the agent fills in blanks instead of starting from scratch
-- **Quality**: the templates encode best practices (objectives, exercises, etc.)
-
-## File Naming Conventions
-
-- **Skill folders**: `kebab-case` (e.g. `frappe-docs`, not `frappe_docs` or `FrappeDocs`)
-- **SKILL.md**: always uppercase, always at the root of the skill folder
-- **Reference files**: `kebab-case` (e.g. `python-api.md`)
-- **Templates**: `<name>.template.md` (e.g. `lesson.template.md`)
-- **Scripts**: `snake_case.py` (e.g. `scaffold_course.py`)
-
-## Frontmatter Best Practices
-
-```yaml
----
-name: "skill-name"           # MUST match folder name
-description: "..."           # 500-1000 chars, include trigger phrases
----
-```
-
-### Description tips
-
-- Include both English and Arabic trigger phrases (if bilingual)
-- Be specific about what triggers it (not just "Frappe")
-- Mention key APIs/concepts the user might ask about
-- Don't make it too long (>1024 chars may fail validation on some platforms)
-
-### Bad description
-
-```yaml
-description: A skill for Frappe.
-```
-
-### Good description
-
-```yaml
-description: "Comprehensive knowledge of the Frappe/ERPNext ecosystem. Use this skill whenever the user mentions Frappe, ERPNext, bench commands, DocType, frappe.get_doc, frappe.whitelist, frappe.call, ERPNext modules (Accounts/Stock/Selling/Buying/Manufacturing/HR/Projects/Payroll), or any task involving installation, customization, troubleshooting, code generation, or configuration of Frappe-based systems."
-```
-
-## Cross-References
-
-Inside SKILL.md, reference other files with relative paths:
-
-```markdown
-## Reference Files
-
-| File | When to read |
-|---|---|
-| `references/framework/python-api.md` | When writing Python code |
-| `references/erpnext/accounts.md` | When asked about accounting |
-```
-
-Inside reference files, cross-reference sibling files:
-
-```markdown
-For REST API details, see [rest-api.md](./rest-api.md).
-For Python API, see [python-api.md](./python-api.md).
-```
-
 ## Dependency Declaration
 
-In `frappe-course-generator/SKILL.md`:
+In [`skills/frappe-course-generator/SKILL.md`](../skills/frappe-course-generator/SKILL.md):
 
 ```markdown
 ## Dependency on `frappe-docs` Skill
@@ -225,7 +173,7 @@ In `frappe-course-generator/SKILL.md`:
 This skill is a sibling of `frappe-docs`. They are designed to work together.
 ```
 
-In `skills.json`:
+In [`skills.json`](../skills.json):
 
 ```json
 {

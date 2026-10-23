@@ -8,25 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.1.0] - 2026-10-23
 
 ### Added
-- **Multi-Agent Universal Compatibility**: Full support for all modern AI coding agents and platforms.
-- **Root Configuration Files**:
-  - `CLAUDE.md`: Claude Code and Anthropic ecosystem project instructions.
-  - `GEMINI.md`: Google Gemini & Antigravity IDE configuration.
-  - `AGENTS.md`: Universal standard for autonomous AI coding agents.
-  - `.cursorrules` & `.cursor/rules/*.mdc`: Cursor AI legacy and modern rules.
-  - `.windsurfrules`: Windsurf (Codeium Cascade) workspace rules.
-  - `.github/copilot-instructions.md`: GitHub Copilot custom workspace instructions.
-  - `.clinerules` & `.roomodes`: Specialized modes for Cline and Roo Code.
-- **Dedicated Adapters Hub (`adapters/`)**:
-  - `adapters/hermes/`: Automated setup script and Hermes skill configuration.
-  - `adapters/claude/`: Claude Code, Projects system prompt, and Desktop MCP settings.
-  - `adapters/gemini-antigravity/`: Antigravity skill guide & Gemini system instruction prompt.
-  - `adapters/codex-openai/`: ChatGPT Custom GPT builder guide & OpenAI Assistants API instructions.
-  - `adapters/cursor/`, `adapters/windsurf/`, `adapters/copilot/`, `adapters/cline/`.
-- **Multi-Agent Cross-Platform Installers**:
-  - Enhanced `install.sh` for Linux/macOS with agent autodetection.
-  - Added `install.ps1` for Windows PowerShell one-command installation.
-  - Added `install.py` cross-platform Python installer.
+- **Multi-Agent Plugin & Marketplace Architecture** (modeled after `addyosmani/agent-skills`):
+  - Placed skills in `skills/frappe-docs/` and `skills/frappe-course-generator/` (preserving 100% original skill files byte-for-byte).
+  - Added 6 synchronized plugin and marketplace manifests (`plugin.json`, `skills.json`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `.codex-plugin/plugin.json`, `.agents/plugins/marketplace.json`).
+  - Added 4 lifecycle slash commands (`/frappe-ask`, `/frappe-doctype`, `/frappe-debug`, `/frappe-course`) synchronized across `.claude/commands/`, `.gemini/commands/`, and `commands/`.
+  - Added 3 specialist agent personas in `agents/`: `frappe-architect.md`, `frappe-reviewer.md`, and `frappe-course-instructor.md`.
+  - Added 3 quick-reference engineering & pedagogical checklists in `references/`: `doctype-checklist.md`, `security-checklist.md`, and `course-quality-checklist.md`.
+  - Added per-agent setup documentation in `docs/` for Claude Code, Google Antigravity, Gemini CLI, OpenAI Codex CLI, Cursor, Hermes, Windsurf, OpenCode, GitHub Copilot, Command Code, and Cline/Roo Code/Kiro.
+  - Added automated CI validation scripts in `scripts/`: `validate-skills.js`, `validate-versions.js`, and `validate-commands.js`.
+- **Cross-Platform One-Command Installers**:
+  - Updated `install.sh` (Linux/macOS/WSL), `install.ps1` (Windows PowerShell), and `install.py` (Python) with multi-agent auto-detection.
+
+### Fixed
+- Resolved `json.decoder.JSONDecodeError: Unexpected UTF-8 BOM` in GitHub Actions CI by enforcing UTF-8 (no BOM) across all repository files and adding `.gitattributes` and automated BOM validation.
 
 ## [1.0.0] - 2026-08-08
 
@@ -61,47 +55,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 |---|---|---|---|---|
 | `frappe-docs` | 18 | 14,338 | 181 KB | English |
 | `frappe-course-generator` | 15 | 8,366 | 112 KB | Arabic + English code |
-
-### Compatibility
-
-- Tested with Hermes agent, Claude Code, Cursor, Windsurf
-- Compatible with any agent that supports the standard skill format (folder + SKILL.md + YAML frontmatter)
-
-### Known Limitations
-
-- Arabic PDF rendering requires `arabic-reshaper` and `python-bidi` libraries
-- Course generation for very long courses (>200 lessons) may require chunked generation
-- Live docs fetching requires internet access to `docs.frappe.io`
-
----
-
-## Versioning
-
-This project uses semantic versioning:
-
-- **MAJOR**: breaking changes to skill structure or frontmatter
-- **MINOR**: new features, new reference files, new lesson types
-- **PATCH**: bug fixes, content corrections, documentation improvements
-
----
-
-## Migration Guides
-
-### From v0.x to v1.0.0
-
-If you installed an earlier version (before the public release):
-
-1. Remove the old skills:
-   ```bash
-   rm -rf ~/.config/hermes/skills/frappe-docs
-   rm -rf ~/.config/hermes/skills/frappe-course-generator
-   ```
-
-2. Install the new version:
-   ```bash
-   npx skills add https://github.com/Orphic-Studios/frappe-skills --skill frappe-docs
-   npx skills add https://github.com/Orphic-Studios/frappe-skills --skill frappe-course-generator
-   ```
-
-3. Restart your AI agent.
-

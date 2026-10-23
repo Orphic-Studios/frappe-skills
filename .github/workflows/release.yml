@@ -6,6 +6,10 @@ on:
     tags:
       - 'v*'
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  NODE_OPTIONS: "--no-deprecation"
+
 jobs:
   release:
     name: Create Release
@@ -17,7 +21,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -45,18 +49,16 @@ jobs:
               data = yaml.safe_load(parts[1])
               assert data['name'] == skill, f"{skill}: name mismatch"
               assert len(data['description']) <= 1024, f"{skill}: description too long"
-              print(f'✅ {skill} valid')
+              print(f'OK {skill} valid')
 
           print('All skills valid for release!')
           EOF
 
       - name: Create .skill packages
         run: |
-          # Create .skill files (ZIP archives) for each skill
           (cd skills && zip -r ../frappe-docs.skill frappe-docs/)
           (cd skills && zip -r ../frappe-course-generator.skill frappe-course-generator/)
 
-          # Create a combined pack
           zip -r frappe-skills-pack.zip skills/ agents/ commands/ references/ docs/ .claude-plugin/ .codex-plugin/ .agents/ .claude/ .gemini/ .opencode/ README.md LICENSE CLAUDE.md AGENTS.md GEMINI.md install.sh install.ps1 install.py plugin.json skills.json
 
           ls -la *.skill *.zip

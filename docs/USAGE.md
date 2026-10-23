@@ -33,7 +33,7 @@ Once `frappe-docs` is installed, your AI agent becomes an expert on Frappe/ERPNe
 ### Expected behavior
 
 The agent will:
-1. Detect that your question is about Frappe/ERPNext
+1. Detect that your question is about Frappe/ERPNext (or run via `/frappe-ask`)
 2. Load the `frappe-docs` skill
 3. Read the relevant reference file (e.g. `python-api.md` for API questions)
 4. Give you a detailed answer with code examples, common mistakes, and best practices
@@ -42,7 +42,7 @@ The agent will:
 
 ## Example 2: Generating a Full Course
 
-Once both skills are installed, you can generate complete training courses.
+Once both skills are installed, you can generate complete training courses (or invoke `/frappe-course`).
 
 ### Basic usage
 
@@ -53,7 +53,7 @@ The agent will:
 2. Scaffold the course folder structure
 3. Generate each module's lessons (theory + code + exercises)
 4. Build PDF and ZIP exports
-5. Deliver the course to your download folder
+5. Deliver the course to your output folder
 
 ### Customizing the course
 
@@ -67,50 +67,16 @@ You can specify:
 | Language | "بالعربية" | ar, en, bilingual |
 | Project | "مع مشروع تطبيقي" | yes/no |
 
-### Example: Quick 5-lesson tutorial
-
-> "Create a short 5-lesson tutorial on ERPNext accounting for beginners, no project needed."
-
-This generates a focused mini-course with 5 lessons + exercises + a final quiz.
-
-### Example: Admin workshop
-
-> "أنشئ ورشة عمل لمسؤولي نظام ERPNext، يوم واحد، 8 دروس عملية."
-
-This generates a 1-day workshop curriculum with hands-on labs.
-
 ---
 
-## Example 3: Generating Specific Lesson Types
-
-You can ask for specific lesson types instead of a full course:
-
-### Theory lesson
-
-> "اكتب درس نظري عن 'ما هو DocType في Frappe Framework؟' بالعربية، 1000 كلمة."
-
-### Practical lesson
-
-> "اكتب درس تطبيقي عن 'إنشاء DocType جديد باسم Task' مع خطوات تفصيلية."
-
-### Quiz
-
-> "أنشئ اختبار قصير من 10 أسئلة عن Python API في Frappe، مع الإجابات."
-
-### Exercise set
-
-> "أعطني 5 تمارين متدرجة الصعوبة على إنشاء DocTypes، مع الحلول."
-
----
-
-## Example 4: Using the Scripts Directly
+## Example 3: Using the Scripts Directly
 
 The `frappe-course-generator` skill includes 3 Python scripts you can run manually.
 
 ### Scaffold a course
 
 ```bash
-python3 ~/.config/hermes/skills/frappe-course-generator/scripts/scaffold_course.py \
+python3 skills/frappe-course-generator/scripts/scaffold_course.py \
     --name "my-frappe-course" \
     --track developer \
     --audience developers \
@@ -125,7 +91,7 @@ This creates the course folder structure with placeholder files.
 ### Build PDF/ZIP from a course
 
 ```bash
-python3 ~/.config/hermes/skills/frappe-course-generator/scripts/build_course.py \
+python3 skills/frappe-course-generator/scripts/build_course.py \
     --input ~/my-frappe-course \
     --format all
 ```
@@ -139,7 +105,7 @@ Outputs:
 ### Verify course quality
 
 ```bash
-python3 ~/.config/hermes/skills/frappe-course-generator/scripts/verify_course.py \
+python3 skills/frappe-course-generator/scripts/verify_course.py \
     ~/my-frappe-course
 ```
 
@@ -147,101 +113,27 @@ Checks for: structure, required sections, exercises with solutions, working cros
 
 ---
 
-## Example 5: Customizing Course Content
+## Integration with CI/CD
 
-### Adding a custom module
-
-> "أضف وحدة جديدة لدورتي بعنوان 'التكامل مع Shopify' تحتوي على 8 دروس."
-
-The agent will:
-1. Read the curriculum blueprint
-2. Create a new module folder with the standard structure
-3. Generate 8 lessons specific to Shopify integration
-4. Update the course README
-
-### Changing exercise difficulty
-
-> "اجعل تمارين الوحدة 3 أصعب — استبدل التمارين السهلة بتمارين متوسطة."
-
-### Translating to English
-
-> "ترجم الدورة كاملة إلى الإنجليزية مع الاحتفاظ بالأكواد."
-
----
-
-## Tips for Best Results
-
-1. **Be specific**: instead of "make a course", say "make a 100-lesson developer course in Arabic with a CRM project".
-
-2. **Mention prerequisites**: tell the agent if your learners are beginners or experienced.
-
-3. **Ask for examples**: "include 2-3 real-world examples per lesson".
-
-4. **Iterate**: generate one module first, review it, then ask for adjustments before generating the rest.
-
-5. **Use the scripts directly**: for fine-grained control, use the Python scripts instead of letting the agent generate everything.
-
-6. **Check the output**: use `verify_course.py` to ensure quality before delivering.
-
----
-
-## Common Workflows
-
-### Workflow 1: Onboarding new developers
-
-1. Generate a 50-lesson developer course (quick length)
-2. Customize the project to match your company's domain
-3. Export as PDF and share with new hires
-4. Have them complete the project as part of onboarding
-
-### Workflow 2: Training end-users on ERPNext
-
-1. Generate a 30-lesson user course (quick length, no project)
-2. Customize modules to match the modules your company uses
-3. Export as PPTX for instructor-led training
-4. Use the quizzes as knowledge checks
-
-### Workflow 3: Building a Frappe training business
-
-1. Use the commercial license (contact maintainer)
-2. Generate courses for different audiences (developers, users, admins)
-3. Customize each course for the client's industry
-4. Deliver as PDF + ZIP
-5. Charge for the customization and delivery
-
----
-
-## Integration with Other Tools
-
-### LMS integration
-
-The generated courses are in standard Markdown, which can be imported into:
-- Moodle (via Markdown import plugin)
-- Canvas (via Common Cartridge format)
-- Notion (via copy-paste or API)
-- GitBook (via Markdown source)
-
-### CI/CD integration
-
-You can automate course generation in CI/CD:
+You can automate course scaffolding and packaging in GitHub Actions:
 
 ```yaml
 # .github/workflows/generate-course.yml
 name: Generate Course
-on: push
+on: workflow_dispatch
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install dependencies
-        run: pip install reportlab markdown arabic-reshaper python-bidi
+        run: pip install reportlab markdown arabic-reshaper python-bidi python-pptx
       - name: Scaffold course
-        run: python3 scripts/scaffold_course.py --name auto-course --track developer --audience developers --language ar --length quick --output ./course
+        run: python3 skills/frappe-course-generator/scripts/scaffold_course.py --name auto-course --track developer --audience developers --language ar --length quick --output ./course
       - name: Build PDF
-        run: python3 scripts/build_course.py --input ./course --format pdf
+        run: python3 skills/frappe-course-generator/scripts/build_course.py --input ./course --format pdf
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: course-pdf
           path: ./course/exports/course.pdf

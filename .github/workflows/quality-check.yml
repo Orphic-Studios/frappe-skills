@@ -7,6 +7,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  NODE_OPTIONS: "--no-deprecation"
+
 jobs:
   validate:
     name: Validate Skills & Plugin Manifests
@@ -124,10 +128,11 @@ jobs:
           done
           echo "File structure OK"
 
-      - name: Test install.sh syntax
+      - name: Test installers syntax
         run: |
           bash -n install.sh
-          echo "install.sh syntax OK"
+          python3 -c "import ast; ast.parse(open('install.py', encoding='utf-8-sig').read()); print('install.py syntax OK')"
+          echo "install.sh and install.py syntax OK"
 
       - name: Test Python scripts in frappe-course-generator
         run: |
@@ -136,9 +141,12 @@ jobs:
           python3 -c "import ast; ast.parse(open('build_course.py', encoding='utf-8-sig').read()); print('build_course.py syntax OK')"
           python3 -c "import ast; ast.parse(open('verify_course.py', encoding='utf-8-sig').read()); print('verify_course.py syntax OK')"
 
-      - name: Test scaffold_course.py and verify_course.py
+      - name: Test course generator CLI and scaffolding
         run: |
           cd skills/frappe-course-generator/scripts
+          python3 scaffold_course.py --help > /dev/null
+          python3 build_course.py --help > /dev/null
+          python3 verify_course.py --help > /dev/null
           python3 scaffold_course.py \
               --name "ci-test" \
               --track developer \
@@ -147,8 +155,9 @@ jobs:
               --length quick \
               --with-project \
               --output /tmp/ci-test-course
-          python3 verify_course.py /tmp/ci-test-course || true
-          echo "Course generator scripts run successfully"
+          test -f /tmp/ci-test-course/README.md
+          test -d /tmp/ci-test-course/modules
+          echo "Course generator scripts run and scaffold successfully"
 
   validate-platforms:
     name: Validate Tooling (${{ matrix.os }})

@@ -3,24 +3,27 @@
     Frappe Skills Pack - Universal Windows PowerShell Installer for AI Agents
 .DESCRIPTION
     Installs frappe-docs and frappe-course-generator skills into supported AI agents
-    (Google Antigravity and Gemini, Claude Code, Cursor, Windsurf, Hermes, Cline, Roo Code).
+    (Google Antigravity, Gemini CLI, Claude Code, Codex, Cursor, Windsurf, Hermes, OpenCode, Copilot CLI, Command Code, Cline, Roo Code, Kiro).
 .PARAMETER All
     Installs to all detected agent directories without prompting.
+.PARAMETER Agent
+    Installs to a specific agent (e.g. hermes, claude, gemini, antigravity, codex, cursor, windsurf, opencode, cline, roo, kiro, all).
 .EXAMPLE
     irm https://raw.githubusercontent.com/Orphic-Studios/frappe-skills/main/install.ps1 | iex
 #>
 
 [CmdletBinding()]
 param(
-    [switch]$All
+    [switch]$All,
+    [string]$Agent = ""
 )
 
 $ErrorActionPreference = "Stop"
 
 function Write-Info($msg) { Write-Host "[INFO]  $msg" -ForegroundColor Cyan }
-function Write-Success($msg) { Write-Host "[OK]  $msg" -ForegroundColor Green }
+function Write-Success($msg) { Write-Host "[OK]    $msg" -ForegroundColor Green }
 function Write-WarningMsg($msg) { Write-Host "[WARN]  $msg" -ForegroundColor Yellow }
-function Write-ErrorMsg($msg) { Write-Host "[ERROR]  $msg" -ForegroundColor Red }
+function Write-ErrorMsg($msg) { Write-Host "[ERROR] $msg" -ForegroundColor Red }
 
 Write-Host ""
 Write-Host "====================================================" -ForegroundColor Cyan
@@ -32,7 +35,6 @@ $HomeDir = $env:USERPROFILE
 $TempFolder = Join-Path $env:TEMP "frappe-skills-install-$([System.Guid]::NewGuid().ToString('N'))"
 $SourceDir = ""
 
-# Determine source directory (local clone or remote download)
 $LocalScriptDir = ""
 if ($MyInvocation.MyCommand.Path) {
     $LocalScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -65,21 +67,32 @@ else {
     }
 }
 
-# Detect Target Agents
 $AgentPaths = @(
-    @{ Name = "Google Antigravity and Gemini"; Path = "$HomeDir\.gemini\antigravity\skills"; Detect = "$HomeDir\.gemini" },
-    @{ Name = "Claude Code"; Path = "$HomeDir\.claude\skills"; Detect = "$HomeDir\.claude" },
-    @{ Name = "Cursor"; Path = "$HomeDir\.cursor\skills"; Detect = "$HomeDir\.cursor" },
-    @{ Name = "Windsurf"; Path = "$HomeDir\.windsurf\skills"; Detect = "$HomeDir\.windsurf" },
-    @{ Name = "Hermes"; Path = "$HomeDir\.config\hermes\skills"; Detect = "$HomeDir\.config\hermes" },
-    @{ Name = "Cline"; Path = "$HomeDir\.cline\skills"; Detect = "$HomeDir\.cline" },
-    @{ Name = "Generic Skills"; Path = "$HomeDir\.skills"; Detect = "$HomeDir\.skills" }
+    @{ Key = "antigravity"; Name = "Google Antigravity"; Path = "$HomeDir\.gemini\antigravity\skills"; Detect = "$HomeDir\.gemini\antigravity" },
+    @{ Key = "gemini"; Name = "Gemini CLI"; Path = "$HomeDir\.gemini\skills"; Detect = "$HomeDir\.gemini" },
+    @{ Key = "claude"; Name = "Claude Code"; Path = "$HomeDir\.claude\skills"; Detect = "$HomeDir\.claude" },
+    @{ Key = "codex"; Name = "OpenAI Codex"; Path = "$HomeDir\.codex\skills"; Detect = "$HomeDir\.codex" },
+    @{ Key = "cursor"; Name = "Cursor"; Path = "$HomeDir\.cursor\skills"; Detect = "$HomeDir\.cursor" },
+    @{ Key = "windsurf"; Name = "Windsurf"; Path = "$HomeDir\.codeium\windsurf\skills"; Detect = "$HomeDir\.codeium\windsurf" },
+    @{ Key = "hermes"; Name = "Hermes"; Path = "$HomeDir\.config\hermes\skills"; Detect = "$HomeDir\.config\hermes" },
+    @{ Key = "opencode"; Name = "OpenCode"; Path = "$HomeDir\.config\opencode\skills"; Detect = "$HomeDir\.config\opencode" },
+    @{ Key = "copilot"; Name = "GitHub Copilot CLI"; Path = "$HomeDir\.copilot\skills"; Detect = "$HomeDir\.copilot" },
+    @{ Key = "commandcode"; Name = "Command Code"; Path = "$HomeDir\.commandcode\skills"; Detect = "$HomeDir\.commandcode" },
+    @{ Key = "cline"; Name = "Cline"; Path = "$HomeDir\.cline\skills"; Detect = "$HomeDir\.cline" },
+    @{ Key = "roo"; Name = "Roo Code"; Path = "$HomeDir\.roo\skills"; Detect = "$HomeDir\.roo" },
+    @{ Key = "kiro"; Name = "Kiro"; Path = "$HomeDir\.kiro\skills"; Detect = "$HomeDir\.kiro" },
+    @{ Key = "generic"; Name = "Generic Skills"; Path = "$HomeDir\.skills"; Detect = "$HomeDir\.skills" }
 )
 
+if ($Agent -eq "all") {
+    $All = $true
+    $Agent = ""
+}
+
 $Targets = @()
-foreach ($agent in $AgentPaths) {
-    if (Test-Path $agent.Detect) {
-        $Targets += $agent
+foreach ($a in $AgentPaths) {
+    if (Test-Path $a.Detect) {
+        $Targets += $a
     }
 }
 
@@ -101,14 +114,22 @@ function Install-ToPath($targetPath) {
 }
 
 try {
-    if ($Targets.Count -eq 0) {
+    if ($Agent) {
+        $matched = $AgentPaths | Where-Object { $_.Key -eq $Agent.ToLower() }
+        if (-not $matched) {
+            Write-ErrorMsg "Unknown agent '$Agent'."
+            exit 1
+        }
+        Install-ToPath $matched.Path
+    }
+    elseif ($Targets.Count -eq 0) {
         Write-WarningMsg "No standard AI agent directories detected. Using default ~/.skills/"
         Install-ToPath "$HomeDir\.skills"
     }
     elseif ($All -or [Console]::IsInputRedirected) {
         Write-Info "Installing to all detected AI agents..."
-        foreach ($agent in $Targets) {
-            Install-ToPath $agent.Path
+        foreach ($a in $Targets) {
+            Install-ToPath $a.Path
         }
     }
     else {
@@ -133,8 +154,8 @@ try {
             Install-ToPath $selected.Path
         }
         elseif ($choiceInt -eq ($Targets.Count + 1)) {
-            foreach ($agent in $Targets) {
-                Install-ToPath $agent.Path
+            foreach ($a in $Targets) {
+                Install-ToPath $a.Path
             }
         }
         else {
