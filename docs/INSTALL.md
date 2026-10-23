@@ -1,6 +1,6 @@
 # Installation Guide
 
-Complete installation instructions for the Frappe Skills Pack.
+Complete installation instructions for the Frappe Skills Pack (`Orphic-Studios/frappe-skills`).
 
 ## Prerequisites
 
@@ -8,7 +8,7 @@ Before installing, ensure you have:
 
 - **Git** — for cloning the repository
 - **Python 3.11+** — for running `frappe-course-generator` scripts
-- **An AI agent** that supports the standard skill format (folder + SKILL.md)
+- **An AI agent** that supports the standard skill format (`skills/<name>/SKILL.md`) or plugin marketplaces
 
 Optional (for course PDF/PPTX export):
 
@@ -18,7 +18,40 @@ pip install reportlab markdown arabic-reshaper python-bidi python-pptx
 
 ## Installation Methods
 
-### Method 1: One-command installer (recommended)
+### Method 1: Native Plugin Marketplaces & `npx skills` (Recommended)
+
+**Skills CLI (`npx skills`) — Works across Claude Code, Cursor, Codex, Antigravity, Gemini CLI, Windsurf, Cline, etc.:**
+```bash
+# Interactive add (select which skills and agents to install for):
+npx skills add Orphic-Studios/frappe-skills
+
+# Or install globally across all detected agents without prompts:
+npx skills add Orphic-Studios/frappe-skills -g --all
+```
+
+**Claude Code Plugin Marketplace:**
+```text
+/plugin marketplace add Orphic-Studios/frappe-skills
+/plugin install frappe-skills@orphic-frappe-skills
+```
+
+**OpenAI Codex CLI Plugin Marketplace:**
+```bash
+codex plugin marketplace add Orphic-Studios/frappe-skills
+codex plugin install frappe-skills@orphic-frappe-skills
+```
+
+**Google Antigravity (`agy`):**
+```bash
+agy plugin install Orphic-Studios/frappe-skills
+```
+
+**Gemini CLI:**
+```bash
+gemini skills install https://github.com/Orphic-Studios/frappe-skills.git --path skills
+```
+
+### Method 2: One-Command Universal Installer
 
 **On Linux / macOS / WSL:**
 ```bash
@@ -30,13 +63,12 @@ curl -fsSL https://raw.githubusercontent.com/Orphic-Studios/frappe-skills/main/i
 irm https://raw.githubusercontent.com/Orphic-Studios/frappe-skills/main/install.ps1 | iex
 ```
 
-The installer will:
-1. Auto-detect your AI agent (Hermes, Claude Code, Google Antigravity/Gemini, Cursor, Windsurf, Cline)
-2. Clone or locate the repository
-3. Copy both skills to the correct location
-4. Verify the installation
+**With Python (Cross-Platform):**
+```bash
+python3 install.py --agent all
+```
 
-### Method 2: Manual installation
+### Method 3: Manual Installation
 
 ```bash
 # Clone the repo
@@ -44,45 +76,27 @@ git clone https://github.com/Orphic-Studios/frappe-skills.git
 cd frappe-skills
 
 # Copy both skill folders to your agent's skills directory
-# Replace ~/.config/hermes/skills/ with your agent's path
-cp -r frappe-docs ~/.config/hermes/skills/
-cp -r frappe-course-generator ~/.config/hermes/skills/
+# Example for Hermes:
+cp -r skills/frappe-docs ~/.config/hermes/skills/
+cp -r skills/frappe-course-generator ~/.config/hermes/skills/
 ```
 
-### Method 3: Using `npx skills add` (Skills CLI)
+## Per-Agent Setup Guides
 
-```bash
-# Interactive add (select which skills and agents to install for):
-npx skills add Orphic-Studios/frappe-skills
-
-# Or install globally across all detected agents without prompts:
-npx skills add Orphic-Studios/frappe-skills -g --all
-```
-
-## Finding Your Agent's Skills Directory
-
-Different agents use different paths:
-
-| Agent | Skills / Config Directory | Adapter Guide |
+| Agent | Skills / Config Directory | Setup Guide |
 |---|---|---|
-| Hermes | `~/.config/hermes/skills/` | [`adapters/hermes/`](../adapters/hermes/) |
-| Claude Code | `~/.claude/skills/` or `./CLAUDE.md` | [`adapters/claude/`](../adapters/claude/) |
-| Gemini & Antigravity | `~/.gemini/antigravity/skills/` | [`adapters/gemini-antigravity/`](../adapters/gemini-antigravity/) |
-| OpenAI Codex / ChatGPT | Custom GPT & Assistants Instructions | [`adapters/codex-openai/`](../adapters/codex-openai/) |
-| Cursor | `~/.cursor/skills/` or `./.cursor/rules/` | [`adapters/cursor/`](../adapters/cursor/) |
-| Windsurf | `~/.windsurf/skills/` or `./.windsurfrules` | [`adapters/windsurf/`](../adapters/windsurf/) |
-| Cline & Roo Code | `~/.cline/skills/` or `./.clinerules` | [`adapters/cline/`](../adapters/cline/) |
-| Generic | `~/.skills/` | [`AGENTS.md`](../AGENTS.md) |
-
-To find your agent's skills directory:
-
-```bash
-# Method 1: search for existing skills
-find ~ -name "SKILL.md" 2>/dev/null | head -5
-
-# Method 2: search for skills directories
-find ~ -type d -name "skills" 2>/dev/null | grep -v node_modules
-```
+| Claude Code | Plugin or `~/.claude/skills/` | [`docs/claude-setup.md`](claude-setup.md) |
+| Google Antigravity (`agy`) | `~/.gemini/antigravity/skills/` | [`docs/antigravity-setup.md`](antigravity-setup.md) |
+| Gemini CLI | `~/.gemini/skills/` | [`docs/gemini-cli-setup.md`](gemini-cli-setup.md) |
+| OpenAI Codex CLI | Plugin or `~/.codex/skills/` | [`docs/codex-setup.md`](codex-setup.md) |
+| Cursor | Plugin or `~/.cursor/skills/` | [`docs/cursor-setup.md`](cursor-setup.md) |
+| Hermes | `~/.config/hermes/skills/` | [`docs/hermes-setup.md`](hermes-setup.md) |
+| Windsurf | `~/.codeium/windsurf/skills/` | [`docs/windsurf-setup.md`](windsurf-setup.md) |
+| OpenCode | `.opencode/skills/` or `~/.config/opencode/skills/` | [`docs/opencode-setup.md`](opencode-setup.md) |
+| GitHub Copilot (VS Code) | `AGENTS.md` / `.github/copilot-instructions.md` | [`docs/copilot-setup.md`](copilot-setup.md) |
+| GitHub Copilot CLI | `~/.copilot/skills/` | [`docs/copilot-cli-setup.md`](copilot-cli-setup.md) |
+| Command Code | `~/.commandcode/skills/` | [`docs/commandcode-setup.md`](commandcode-setup.md) |
+| Cline / Roo Code / Kiro | `~/.cline/skills/` or `~/.roo/skills/` | [`docs/other-hosts.md`](other-hosts.md) |
 
 ## Verifying Installation
 
@@ -103,61 +117,3 @@ Then restart your AI agent and test:
 > "كيف أنشئ DocType جديد في Frappe Framework؟"
 
 The agent should now give detailed, accurate answers using the `frappe-docs` skill.
-
-## Updating
-
-To update to a newer version:
-
-```bash
-# Remove old version
-rm -rf ~/.config/hermes/skills/frappe-docs
-rm -rf ~/.config/hermes/skills/frappe-course-generator
-
-# Re-run installer
-curl -fsSL https://raw.githubusercontent.com/Orphic-Studios/frappe-skills/main/install.sh | bash
-```
-
-Or with `npx skills`:
-
-```bash
-npx skills update frappe-docs
-npx skills update frappe-course-generator
-```
-
-## Uninstalling
-
-```bash
-rm -rf ~/.config/hermes/skills/frappe-docs
-rm -rf ~/.config/hermes/skills/frappe-course-generator
-```
-
-Restart your AI agent.
-
-## Troubleshooting
-
-### Skill not detected
-
-1. Verify `SKILL.md` exists at the expected path
-2. Check the YAML frontmatter is valid:
-   ```bash
-   head -5 ~/.config/hermes/skills/frappe-docs/SKILL.md
-   ```
-3. Restart your AI agent
-
-### Scripts not working
-
-```bash
-# Install Python dependencies
-pip install reportlab markdown arabic-reshaper python-bidi python-pptx
-
-# Test the scripts
-python3 ~/.config/hermes/skills/frappe-course-generator/scripts/scaffold_course.py --help
-```
-
-### Permission denied on install.sh
-
-```bash
-chmod +x install.sh
-./install.sh
-```
-

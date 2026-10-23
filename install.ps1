@@ -37,11 +37,11 @@ $LocalScriptDir = ""
 if ($MyInvocation.MyCommand.Path) {
     $LocalScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 }
-elseif (Test-Path "frappe-docs\SKILL.md") {
+elseif (Test-Path "skills\frappe-docs\SKILL.md") {
     $LocalScriptDir = (Get-Location).Path
 }
 
-if ($LocalScriptDir -and (Test-Path (Join-Path $LocalScriptDir "frappe-docs\SKILL.md"))) {
+if ($LocalScriptDir -and (Test-Path (Join-Path $LocalScriptDir "skills\frappe-docs\SKILL.md"))) {
     $SourceDir = $LocalScriptDir
     Write-Info "Using local files from: $SourceDir"
 }
@@ -94,8 +94,8 @@ function Install-ToPath($targetPath) {
     if (Test-Path $docsTarget) { Remove-Item -Recurse -Force $docsTarget }
     if (Test-Path $courseTarget) { Remove-Item -Recurse -Force $courseTarget }
 
-    Copy-Item -Recurse -Force -Path (Join-Path $SourceDir "frappe-docs") -Destination $targetPath
-    Copy-Item -Recurse -Force -Path (Join-Path $SourceDir "frappe-course-generator") -Destination $targetPath
+    Copy-Item -Recurse -Force -Path (Join-Path $SourceDir "skills\frappe-docs") -Destination $targetPath
+    Copy-Item -Recurse -Force -Path (Join-Path $SourceDir "skills\frappe-course-generator") -Destination $targetPath
 
     Write-Success "Installed to: $targetPath"
 }

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "orphic-frappe-skills",
+  "description": "Production-grade Frappe Framework & ERPNext technical reference and Arabic course generation skills for AI coding agents.",
+  "owner": {
+    "name": "Orphic Studios",
+    "url": "https://github.com/Orphic-Studios"
+  },
+  "plugins": [
+    {
+      "name": "frappe-skills",
+      "version": "1.1.0",
+      "source": {
+        "source": "github",
+        "repo": "Orphic-Studios/frappe-skills"
+      },
+      "description": "Comprehensive Frappe Framework & ERPNext technical knowledge base (frappe-docs) and Arabic training course generator (frappe-course-generator).",
+      "homepage": "https://github.com/Orphic-Studios/frappe-skills",
+      "license": "MIT + Commercial",
+      "keywords": ["frappe", "erpnext", "skills", "agents", "arabic", "course-generator", "erp"]
+    }
+  ]
+}

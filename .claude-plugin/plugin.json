@@ -1,0 +1,13 @@
+{
+  "name": "frappe-skills",
+  "version": "1.1.0",
+  "description": "Production-grade Frappe Framework & ERPNext technical reference and Arabic course generation skills for AI coding agents.",
+  "author": {
+    "name": "Orphic Studios"
+  },
+  "homepage": "https://github.com/Orphic-Studios/frappe-skills",
+  "repository": "https://github.com/Orphic-Studios/frappe-skills",
+  "license": "MIT + Commercial",
+  "commands": ["./.claude/commands", "./commands"],
+  "skills": "./skills"
+}

@@ -1,7 +1,7 @@
 {
-  "name": "frappe-skills-pack",
+  "name": "frappe-skills",
   "version": "1.1.0",
-  "description": "A production-ready dual AI skill pack and multi-agent integration hub for the Frappe/ERPNext ecosystem: deep technical knowledge base (frappe-docs) and Arabic course generation engine (frappe-course-generator), compatible with Hermes, Claude, Gemini, Antigravity, OpenAI Codex/ChatGPT, Cursor, Windsurf, Copilot, and Cline.",
+  "description": "A production-ready dual AI skill pack for the Frappe/ERPNext ecosystem: deep technical knowledge base (frappe-docs) and Arabic course generation engine (frappe-course-generator), compatible with Claude Code, Cursor, Codex, Antigravity, Gemini CLI, Hermes, Windsurf, Copilot, OpenCode, and Cline.",
   "author": {
     "name": "Orphic Studios",
     "github": "Orphic-Studios",
@@ -17,41 +17,43 @@
     "frappe",
     "erpnext",
     "frappe-framework",
+    "agent-skills",
     "ai-skills",
     "ai-agent",
     "hermes",
     "claude-code",
-    "gemini",
+    "claude-plugin",
+    "gemini-cli",
     "antigravity",
-    "openai-codex",
-    "chatgpt",
+    "codex",
     "cursor",
-    "cursorrules",
     "windsurf",
     "github-copilot",
+    "opencode",
     "cline",
-    "roo-code",
     "training",
     "course-generator",
     "arabic",
-    "erp",
-    "open-source"
+    "erp"
   ],
   "topics": [
     "frappe",
     "erpnext",
+    "agent-skills",
     "ai-skills",
     "ai-agent",
-    "training",
+    "claude-code",
+    "codex",
+    "cursor",
+    "gemini-cli",
     "arabic",
-    "course-generator",
-    "multi-agent"
+    "course-generator"
   ],
   "skills": [
     {
       "name": "frappe-docs",
       "description": "Comprehensive knowledge of the entire Frappe/ERPNext ecosystem (Frappe Framework, ERPNext, Frappe HR, CRM, Cloud, Builder, Insights, Print Designer, Wiki, Drive, Learning, Helpdesk). Use this skill whenever the user mentions Frappe, ERPNext, bench commands, DocType, frappe.get_doc, frappe.whitelist, frappe.call, frappe.db.sql, ERPNext modules (Accounts/Stock/Selling/Buying/Manufacturing/HR/Projects/Payroll), Web Forms, Server Scripts, Client Scripts, hooks.py, Print Formats, Workflows, Custom Fields, REST API of Frappe/ERPNext, or any task involving installation, customization, troubleshooting, code generation, or configuration of Frappe-based systems.",
-      "path": "frappe-docs",
+      "path": "skills/frappe-docs",
       "language": "en",
       "size_kb": 181,
       "files_count": 18,
@@ -67,7 +69,7 @@
     {
       "name": "frappe-course-generator",
       "description": "Generates complete, production-ready training courses on the Frappe/ERPNext ecosystem in Arabic (with English code/technical terms). Use this skill whenever the user asks to 'create a course', 'build a curriculum', 'generate training material', 'make a tutorial', 'توليد دورة', 'إنشاء كورس تعليمي', 'دورة Frappe', 'دورة ERPNext', 'محتوى تعليمي', 'مواد تدريبية', or wants to teach Frappe/ERPNext to others (developers, end-users, or admins). Also use it when the user wants a 'training kit', 'workshop materials', 'bootcamp', 'onboarding guide', 'learning path', or any structured educational deliverable covering Frappe Framework, ERPNext modules, or any Frappe app.",
-      "path": "frappe-course-generator",
+      "path": "skills/frappe-course-generator",
       "language": "ar",
       "size_kb": 112,
       "files_count": 15,
@@ -85,29 +87,20 @@
     }
   ],
   "agents": [
-    "hermes",
     "claude-code",
-    "claude-projects",
-    "gemini",
-    "antigravity",
-    "codex",
-    "chatgpt",
     "cursor",
+    "codex",
+    "antigravity",
+    "gemini-cli",
+    "hermes",
     "windsurf",
+    "opencode",
     "github-copilot",
+    "commandcode",
     "cline",
-    "roo-code"
+    "roo-code",
+    "kiro"
   ],
-  "adapters": {
-    "hermes": "adapters/hermes",
-    "claude": "adapters/claude",
-    "gemini_antigravity": "adapters/gemini-antigravity",
-    "codex_openai": "adapters/codex-openai",
-    "cursor": "adapters/cursor",
-    "windsurf": "adapters/windsurf",
-    "copilot": "adapters/copilot",
-    "cline": "adapters/cline"
-  },
   "categories": [
     "Development",
     "Education",
@@ -123,13 +116,17 @@
   "marketplace": {
     "skills_sh": {
       "listed": true,
-      "url": "https://www.skills.sh/Orphic-Studios/frappe-skills",
-      "verified": false
+      "url": "https://skills.sh/Orphic-Studios/frappe-skills",
+      "verified": true
     }
   },
   "install": {
     "skills": "npx skills add Orphic-Studios/frappe-skills",
     "npm": "npx skills add Orphic-Studios/frappe-skills",
+    "claude": "/plugin marketplace add Orphic-Studios/frappe-skills && /plugin install frappe-skills@orphic-frappe-skills",
+    "codex": "codex plugin marketplace add Orphic-Studios/frappe-skills && codex plugin add frappe-skills@frappe-skills",
+    "antigravity": "agy plugin install https://github.com/Orphic-Studios/frappe-skills.git",
+    "gemini": "gemini skills install https://github.com/Orphic-Studios/frappe-skills.git --path skills",
     "git": "git clone https://github.com/Orphic-Studios/frappe-skills.git",
     "bash": "curl -fsSL https://raw.githubusercontent.com/Orphic-Studios/frappe-skills/main/install.sh | bash",
     "powershell": "irm https://raw.githubusercontent.com/Orphic-Studios/frappe-skills/main/install.ps1 | iex"

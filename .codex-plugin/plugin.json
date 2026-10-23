@@ -1,0 +1,29 @@
+{
+  "name": "frappe-skills",
+  "version": "1.1.0",
+  "description": "Production-grade Frappe Framework & ERPNext technical reference and Arabic course generation skills for AI coding agents.",
+  "author": {
+    "name": "Orphic Studios",
+    "url": "https://github.com/Orphic-Studios"
+  },
+  "homepage": "https://github.com/Orphic-Studios/frappe-skills",
+  "repository": "https://github.com/Orphic-Studios/frappe-skills",
+  "license": "MIT + Commercial",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Frappe Skills Pack",
+    "shortDescription": "Frappe Framework & ERPNext deep technical reference and Arabic course generator.",
+    "longDescription": "Frappe Skills Pack bundles a comprehensive technical reference covering Frappe Framework, ERPNext, and all Frappe ecosystem apps alongside a structured course generation engine in Arabic.",
+    "developerName": "Orphic Studios",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Help me design or implement a DocType and controller in Frappe Framework",
+      "Generate a complete Arabic training course on Frappe Framework or ERPNext"
+    ]
+  }
+}

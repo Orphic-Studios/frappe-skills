@@ -14,6 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -23,15 +28,18 @@ jobs:
         run: |
           pip install pyyaml
 
-      - name: Validate skills before release
+      - name: Validate skills & manifests before release
         run: |
+          node scripts/validate-skills.js
+          node scripts/validate-versions.js
+          node scripts/validate-commands.js
           python3 << 'EOF'
           import yaml
           import sys
 
           skills = ['frappe-docs', 'frappe-course-generator']
           for skill in skills:
-              with open(f'{skill}/SKILL.md') as f:
+              with open(f'skills/{skill}/SKILL.md', encoding='utf-8-sig') as f:
                   content = f.read()
               parts = content.split('---', 2)
               data = yaml.safe_load(parts[1])
@@ -45,11 +53,11 @@ jobs:
       - name: Create .skill packages
         run: |
           # Create .skill files (ZIP archives) for each skill
-          zip -r frappe-docs.skill frappe-docs/
-          zip -r frappe-course-generator.skill frappe-course-generator/
+          (cd skills && zip -r ../frappe-docs.skill frappe-docs/)
+          (cd skills && zip -r ../frappe-course-generator.skill frappe-course-generator/)
 
           # Create a combined pack
-          zip -r frappe-skills-pack.zip frappe-docs/ frappe-course-generator/ README.md LICENSE install.sh skills.json
+          zip -r frappe-skills-pack.zip skills/ agents/ commands/ references/ docs/ .claude-plugin/ .codex-plugin/ .agents/ .claude/ .gemini/ .opencode/ README.md LICENSE CLAUDE.md AGENTS.md GEMINI.md install.sh install.ps1 install.py plugin.json skills.json
 
           ls -la *.skill *.zip
 

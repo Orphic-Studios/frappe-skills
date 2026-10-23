@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Frappe Skills Pack - Cross-Platform Installer for AI Agents
-Supports: Hermes, Claude Code, Gemini/Antigravity, Cursor, Windsurf, Cline, and generic skills.
+Supports: Hermes, Claude Code, Gemini/Antigravity, Cursor, Windsurf, OpenCode, Cline, and generic skills.
 """
 
 import os
@@ -18,6 +18,7 @@ AGENTS = [
     ("Cursor", HOME / ".cursor" / "skills", HOME / ".cursor"),
     ("Windsurf", HOME / ".windsurf" / "skills", HOME / ".windsurf"),
     ("Hermes", HOME / ".config" / "hermes" / "skills", HOME / ".config" / "hermes"),
+    ("OpenCode", HOME / ".config" / "opencode" / "skills", HOME / ".config" / "opencode"),
     ("Cline", HOME / ".cline" / "skills", HOME / ".cline"),
     ("Generic Skills", HOME / ".skills", HOME / ".skills"),
 ]
@@ -25,7 +26,7 @@ AGENTS = [
 def install_skills(dest: Path):
     dest.mkdir(parents=True, exist_ok=True)
     for skill in ["frappe-docs", "frappe-course-generator"]:
-        src = SCRIPT_DIR / skill
+        src = SCRIPT_DIR / "skills" / skill
         target = dest / skill
         if target.exists():
             shutil.rmtree(target)

@@ -54,6 +54,11 @@ detect_agents() {
         echo "Windsurf:$HOME/.windsurf/skills"
     fi
 
+    # OpenCode
+    if [ -d "$HOME/.config/opencode" ]; then
+        echo "OpenCode:$HOME/.config/opencode/skills"
+    fi
+
     # Cline
     if [ -d "$HOME/.cline" ]; then
         echo "Cline:$HOME/.cline/skills"
@@ -71,11 +76,11 @@ install_to_dir() {
 
     # Install frappe-docs
     rm -rf "$target_dir/frappe-docs"
-    cp -r "$SOURCE_DIR/frappe-docs" "$target_dir/"
+    cp -r "$SOURCE_DIR/skills/frappe-docs" "$target_dir/"
 
     # Install frappe-course-generator
     rm -rf "$target_dir/frappe-course-generator"
-    cp -r "$SOURCE_DIR/frappe-course-generator" "$target_dir/"
+    cp -r "$SOURCE_DIR/skills/frappe-course-generator" "$target_dir/"
 
     success "Installed to $target_dir"
 }
@@ -100,7 +105,7 @@ main() {
         SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd || echo "")"
     fi
 
-    if [ -n "$SCRIPT_DIR" ] && [ -f "$SCRIPT_DIR/frappe-docs/SKILL.md" ]; then
+    if [ -n "$SCRIPT_DIR" ] && [ -f "$SCRIPT_DIR/skills/frappe-docs/SKILL.md" ]; then
         SOURCE_DIR="$SCRIPT_DIR"
         info "Using local files from: $SOURCE_DIR"
     else

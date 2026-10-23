@@ -1,0 +1,15 @@
+---
+description: Generate a complete, structured Arabic training course, module, or tutorial on Frappe and ERPNext.
+---
+
+Invoke the `frappe-skills:frappe-course-generator` skill alongside `frappe-skills:frappe-docs`.
+
+## Process
+
+1. Determine the course scope from `$ARGUMENTS`:
+   - **Track**: `developer` (12 modules), `user` (10 modules), or `admin` (8 modules).
+   - **Length**: `quick` (mini-course / tutorial), `standard`, or `comprehensive`.
+   - **Topic focus**: Specific Frappe Framework concept, ERPNext module, or full-track curriculum.
+2. Read the curriculum and lesson blueprints in `skills/frappe-course-generator/references/curriculum.md` and `skills/frappe-course-generator/references/lesson-blueprints.md`.
+3. Consult `skills/frappe-docs/references/` for technical accuracy on every code example, DocType, and command.
+4. Scaffold the course directory using `skills/frappe-course-generator/scripts/scaffold_course.py`, author each lesson in Modern Standard Arabic (keeping code, bench commands, and DocType identifiers in English), and verify/build the package using `verify_course.py` and `build_course.py`.

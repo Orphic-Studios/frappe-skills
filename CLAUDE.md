@@ -1,71 +1,35 @@
-# CLAUDE.md — Frappe & ERPNext Skills Pack Configuration
+# frappe-skills
 
-Welcome to the **Frappe Skills Pack** for Claude Code and Anthropic AI models. This repository contains two core production-ready skills:
-1. `frappe-docs`: Comprehensive technical documentation, APIs, hooks, DocType architecture, bench commands, and troubleshooting for Frappe Framework & ERPNext.
-2. `frappe-course-generator`: An automated curriculum and course production engine generating complete Arabic training materials with bilingual code snippets.
+This is the **Frappe Skills Pack** repository — production-grade Frappe Framework & ERPNext skills, commands, and specialist personas for AI coding agents.
 
----
+> **Scope:** This file configures agents working on the [`Orphic-Studios/frappe-skills`](https://github.com/Orphic-Studios/frappe-skills) repository itself or using it as a plugin. The reusable skill assets live in `skills/`.
 
-## 🧭 Core Architectural Guidelines
+## Project Structure
 
-### Frappe Framework Mental Model
-- **Schema-as-Data**: DocTypes describe DB tables (`tabDocType`). Adding fields is metadata-driven; avoid raw DDL unless writing migrations.
-- **ORM & DB Access**:
-  - Always prefer `frappe.get_doc()`, `frappe.new_doc()`, `frappe.get_all()`, or `frappe.db.get_value()` over raw SQL.
-  - When raw SQL is required: ALWAYS use parameterized queries `frappe.db.sql("""SELECT ... FROM `tab...` WHERE status = %(status)s""", {"status": "Open"}, as_dict=True)`.
-  - Never concatenate user input into SQL queries.
-  - Whitelisted endpoints: Must be decorated with `@frappe.whitelist()`. Validate user permissions with `frappe.has_permission()`.
-- **Client-Side Conventions**:
-  - Use `frappe.ui.form.on('DocType', { ... })` for form scripting.
-  - Asynchronous calls: `frappe.call({ method: 'app.api.method', args: {}, callback: (r) => { ... } })`.
-- **Hooks & Events**:
-  - Register doc events, overrides, fixtures, scheduled jobs, and web views inside `hooks.py`.
-  - Avoid infinite recursion in doc hooks (e.g. calling `doc.save()` inside `on_update` without flags).
-
----
-
-## 📚 Skill Reference Mapping
-
-When answering questions or generating code, consult the following local references:
-
-| Domain | Reference Path |
-|---|---|
-| **Architecture & Lifecycle** | [frappe-docs/references/framework/architecture.md](file:///frappe-docs/references/framework/architecture.md) |
-| **Python API & ORM** | [frappe-docs/references/framework/python-api.md](file:///frappe-docs/references/framework/python-api.md) |
-| **DocType Definition & Schemas** | [frappe-docs/references/framework/doctype-guide.md](file:///frappe-docs/references/framework/doctype-guide.md) |
-| **Bench CLI Commands** | [frappe-docs/references/framework/bench-cli.md](file:///frappe-docs/references/framework/bench-cli.md) |
-| **REST API** | [frappe-docs/references/framework/rest-api.md](file:///frappe-docs/references/framework/rest-api.md) |
-| **Client Scripting & JS API** | [frappe-docs/references/framework/scripting.md](file:///frappe-docs/references/framework/scripting.md) |
-| **Webviews & Deployment** | [frappe-docs/references/framework/webviews-deployment.md](file:///frappe-docs/references/framework/webviews-deployment.md) |
-| **Troubleshooting & Fixes** | [frappe-docs/references/troubleshooting.md](file:///frappe-docs/references/troubleshooting.md) |
-| **ERPNext Modules (Accounts, Stock, etc.)** | [frappe-docs/references/erpnext/](file:///frappe-docs/references/erpnext/) |
-| **Ecosystem Apps (HR, CRM, Helpdesk, etc.)** | [frappe-docs/references/apps/ecosystem.md](file:///frappe-docs/references/apps/ecosystem.md) |
-
----
-
-## 🎓 Course Generator Workflow (`frappe-course-generator`)
-
-When asked to create a training course, curriculum, workshop, or educational tutorial on Frappe / ERPNext:
-1. **Target Language**: Arabic for explanatory text and pedagogical narrative; English for code, DocType names, bench commands, and field identifiers.
-2. **Pedagogical Structure**: Follow the 5 lesson archetypes defined in `frappe-course-generator/references/lesson-blueprints.md`:
-   - `theory`: Conceptual foundations with ASCII diagrams and architecture breakdowns.
-   - `practical`: Step-by-step hands-on implementation guide.
-   - `exercise`: Problem statement, hints, starter code, and test scenarios.
-   - `quiz`: Multiple-choice and short-answer questions with detailed answer keys.
-   - `project-step`: Progressive integration into the Capstone project.
-3. **Execution Scripts**:
-   - `frappe-course-generator/scripts/scaffold_course.py`: Scaffolds the standard directory hierarchy.
-   - `frappe-course-generator/scripts/build_course.py`: Compiles Markdown, generates TOC, and builds PDF/ZIP bundles.
-   - `frappe-course-generator/scripts/verify_course.py`: Runs structural and quality assertions.
-
----
-
-## 🛠️ Preferred Commands & Development Checks
-
-```bash
-# Validate skill frontmatter and JSON manifest
-python -m py_compile frappe-course-generator/scripts/*.py
-
-# Run quality checks
-bash install.sh --verify
 ```
+skills/            → Core skills (SKILL.md per directory)
+agents/            → Reusable agent personas (frappe-architect, frappe-reviewer, frappe-course-instructor)
+.claude/commands/  → Claude Code slash commands (/frappe-ask, /frappe-doctype, /frappe-debug, /frappe-course)
+.gemini/commands/  → Gemini CLI slash commands (.toml)
+commands/          → Antigravity CLI slash commands (.toml)
+references/        → Supplementary checklists (doctype, security, course-quality)
+scripts/           → Repository validation scripts (validate-skills.js, validate-versions.js, validate-commands.js)
+docs/              → Setup guides for every supported agent host
+```
+
+## Skills
+
+- **[`frappe-docs`](skills/frappe-docs/SKILL.md)** — Authoritative technical reference covering Frappe Framework (architecture, ORM, DocTypes, hooks, REST/JS APIs, bench CLI), ERPNext modules, ecosystem apps, and 40+ troubleshooting guides.
+- **[`frappe-course-generator`](skills/frappe-course-generator/SKILL.md)** — Automated curriculum and lesson authoring engine that generates complete Arabic training courses with English code, exercises, quizzes, and PDF/PPTX/ZIP packaging.
+
+## Conventions
+
+- Every skill lives in `skills/<name>/SKILL.md` with valid YAML frontmatter (`name` and `description` <= 1024 chars).
+- All plugin manifests (`plugin.json`, `skills.json`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `.codex-plugin/plugin.json`, `.agents/plugins/marketplace.json`) must share the exact same version and be saved as UTF-8 without BOM.
+- Slash commands across `.claude/commands/`, `.gemini/commands/`, and `commands/` must stay in sync.
+
+## Validation Commands
+
+- `node scripts/validate-skills.js` — Validate all skills in `skills/` and personas in `agents/`
+- `node scripts/validate-versions.js` — Verify version sync and UTF-8 (no BOM) across all 6 plugin manifests
+- `node scripts/validate-commands.js` — Verify slash command parity across Claude, Gemini, and Antigravity

@@ -1,0 +1,18 @@
+description = "Design and scaffold a Frappe DocType, Python controller, client script, hooks, and tests following framework conventions."
+
+prompt = """
+Invoke the frappe-docs skill and load `skills/frappe-docs/references/framework/doctype-guide.md`, `skills/frappe-docs/references/framework/python-api.md`, and `skills/frappe-docs/references/framework/scripting.md`.
+
+## Process
+
+1. Clarify the DocType specification from the user's request:
+   - DocType name (singular TitleCase), module, naming rule (`autoname`), and whether it is Submittable, Child Table (`istable`), Single (`issingle`), or Tree (`is_tree`).
+   - Fields, fieldtypes (`Data`, `Link`, `Select`, `Table`, `Currency`, `Date`, etc.), mandatory constraints, and role permissions.
+2. Generate the complete artifact set:
+   - JSON schema (`<doctype_snake>.json`) with proper field order, section/column breaks, and permissions.
+   - Python controller (`<doctype_snake>.py`) inheriting from `frappe.model.document.Document` with lifecycle hooks (`validate`, `before_save`, `on_submit`, `on_cancel`).
+   - Client script (`<doctype_snake>.js`) using `frappe.ui.form.on('<DocType>', { ... })`.
+   - Hooks registration (`hooks.py` entries) if `doc_events` or scheduled jobs are required.
+   - Unit tests (`test_<doctype_snake>.py`) extending `FrappeTestCase`.
+3. Provide the exact `bench` commands needed to migrate and test the DocType (`bench --site <site> migrate`, `bench --site <site> run-tests --doctype "<DocType>"`).
+"""
